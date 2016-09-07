@@ -10,6 +10,6 @@ package Controller;
  * @author Your Name <timothy>
  */
 public class User {
-    private float latitude;
-    private float longitude;
+    public float latitude;
+    public float longitude;
 }

@@ -9,6 +9,6 @@ package Model;
  *
  * @author Your Name <timothy>
  */
-public class Moon {
+public class Moon extends CelestialObject {
     
 }

@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
+package Model;
 
 /**
  *
  * @author Your Name <timothy>
  */
-public class MainWindow {
-    
+public class CelestialObject {
+    public int starID;
+    public String properName;
+    public float ra;
+    public float dec;
+    public float mag;
 }

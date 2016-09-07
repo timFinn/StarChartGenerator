@@ -21,7 +21,7 @@ import javax.swing.UIManager;
 
 /**
  *
- * @author polyp_000
+  * @author Your Name <timothy>
  */
 public class StarMapUtility extends JApplet {
     
