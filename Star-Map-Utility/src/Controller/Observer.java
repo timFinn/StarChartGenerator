@@ -5,11 +5,17 @@
  */
 package Controller;
 
+import java.time.*;
+import java.util.Date;
+
 /**
  *
  * @author Your Name <timothy>
  */
-public class User {
-    public float latitude;
-    public float longitude;
+public class Observer {
+    public double latitude;
+    public double longitude;
+    public Date observedDate;
+    
+    
 }
