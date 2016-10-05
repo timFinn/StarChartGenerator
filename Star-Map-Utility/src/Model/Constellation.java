@@ -5,10 +5,12 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Your Name <timothy>
  */
 public class Constellation extends CelestialObject {
-    
+    ArrayList constellationMembers;
 }
