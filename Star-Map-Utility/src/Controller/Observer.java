@@ -16,6 +16,17 @@ public class Observer {
     public double latitude;
     public double longitude;
     public Date observedDate;
+    public Date observedTime;
+
+    public Observer(double latitude, double longitude, Date observedDate, Date observedTime) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.observedDate = observedDate;
+        this.observedTime = observedTime;
+    }
+
+    
+    
     
     
 }
