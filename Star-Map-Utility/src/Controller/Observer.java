@@ -23,6 +23,11 @@ public class Observer {
         this.longitude = longitude;
         this.observedDate = observedDate;
         this.observedTime = observedTime;
+        
+        System.out.println(latitude);
+        System.out.println(longitude);
+        System.out.println(observedDate);
+        System.out.println(observedTime);
     }
 
     
