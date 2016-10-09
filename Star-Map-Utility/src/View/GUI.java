@@ -10,6 +10,8 @@ import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -141,6 +143,11 @@ public class GUI extends javax.swing.JFrame {
         } catch(ParseException e)
                 {
                     e.printStackTrace();
+                    System.out.println("Date format incorrect. Try again.");
+                    JOptionPane.showMessageDialog(new JDialog(),
+                                                    "Date format incorrect. Try again.",
+                                                    "Warning!",
+                                                    JOptionPane.WARNING_MESSAGE);
                 }
         
         DateFormat tf = new SimpleDateFormat("HH:mm:ss z");             
@@ -152,6 +159,11 @@ public class GUI extends javax.swing.JFrame {
         } catch(ParseException e)
                 {
                     e.printStackTrace();
+                    System.out.println("Time format incorrect. Try again.");
+                    JOptionPane.showMessageDialog(new JDialog(),
+                                                    "Time format incorrect. Try again.",
+                                                    "Warning!",
+                                                    JOptionPane.WARNING_MESSAGE);
                 }
         
         Controller.Observer observed = new Observer(latConverted, longConverted, dateConverted, timeConverted);
