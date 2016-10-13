@@ -15,4 +15,14 @@ public class CelestialObject {
     public float ra;
     public float dec;
     public float mag;
+
+    public CelestialObject(int starID, String properName, float ra, float dec, float mag) {
+        this.starID = starID;
+        this.properName = properName;
+        this.ra = ra;
+        this.dec = dec;
+        this.mag = mag;
+    }
+    
+    
 }
