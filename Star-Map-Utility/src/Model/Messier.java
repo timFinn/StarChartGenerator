@@ -10,5 +10,9 @@ package Model;
  * @author Your Name <timothy>
  */
 public class Messier extends CelestialObject {
+
+    public Messier() {
+        
+    }
     
 }

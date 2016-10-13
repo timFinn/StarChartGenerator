@@ -11,4 +11,8 @@ package Model;
  */
 public class Star extends CelestialObject {
     
+    public Star() {
+        
+    }
+    
 }
