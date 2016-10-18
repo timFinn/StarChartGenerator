@@ -10,5 +10,17 @@ package Model;
  * @author Your Name <timothy>
  */
 public class Messier extends CelestialObject {
-    
+    public int nosInCat;
+    public int newNos;
+    public String rightAscensionHMS;
+    public String rightAscensionDMS;
+    public String declenationDMS;
+
+    public Messier(int nosInCat, int newNos, String rightAscensionHMS, String rightAscensionDMS, String declenationDMS) {
+        this.nosInCat = nosInCat;
+        this.newNos = newNos;
+        this.rightAscensionHMS = rightAscensionHMS;
+        this.rightAscensionDMS = rightAscensionDMS;
+        this.declenationDMS = declenationDMS;
+    }
 }

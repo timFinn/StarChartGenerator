@@ -13,4 +13,8 @@ import java.util.ArrayList;
  */
 public class Constellation extends CelestialObject {
     ArrayList constellationMembers;
+
+    public Constellation() {
+    }
+    
 }
