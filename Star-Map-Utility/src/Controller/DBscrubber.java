@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package Controller;
 
 /**
  *
- * @author Your Name <timothy>
+ * @author tbf0005
  */
-public class Formulas {
+public class DBscrubber {
     
 }
