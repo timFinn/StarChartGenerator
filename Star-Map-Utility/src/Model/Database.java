@@ -51,7 +51,7 @@ public class Database {
         System.out.println("MySQL JDBC Driver Registered");
         
         try {
-            String url = "jdbc:mysql://104.155.185.144";
+            String url = "jdbc:mysql://db4free.net:3306/star_map_util";
             String username = "cs499team8";
             String password = "cs499team8";
             connection = DriverManager.getConnection(url, username, password);
