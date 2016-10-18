@@ -15,4 +15,10 @@ public class CelestialObject {
     public float ra;
     public float dec;
     public float mag;
+
+    public CelestialObject() {
+
+    }
+    
+    
 }
