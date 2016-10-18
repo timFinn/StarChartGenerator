@@ -41,19 +41,19 @@ public class Database {
 // Initiates connection with SQL server
 ////////////////////////////////////////
     public void startConnection() {
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//        } 
-//        catch (ClassNotFoundException e) {
-//        System.out.println("Could not find MySQL JDBC Driver");
-//            e.printStackTrace();
-//        }
-//        System.out.println("MySQL JDBC Driver Registered");
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } 
+        catch (ClassNotFoundException e) {
+        System.out.println("Could not find MySQL JDBC Driver");
+            e.printStackTrace();
+        }
+        System.out.println("MySQL JDBC Driver Registered");
         
         try {
             String url = "jdbc:mysql://104.155.185.144";
-            String username = "root";
-            String password = "76zqmlyk";
+            String username = "cs499team8";
+            String password = "cs499team8";
             connection = DriverManager.getConnection(url, username, password);
             System.out.println("Connection established");
         } 
