@@ -16,6 +16,10 @@ public class Formulas {
     {
         // do the conversion
         double decDegrees = dms.degrees + (dms.minutes / 60) + (dms.seconds / 3600);
+        // set negative or positive
+        if (dms.direction == 'S')
+            decDegrees = decDegrees * (-1);
+        
         // return it
         return decDegrees;
     }
@@ -29,6 +33,12 @@ public class Formulas {
         dms.degrees = (int)decimal;
         dms.minutes = (int)((decimal - dms.degrees) * 60);
         dms.seconds = (((decimal - dms.degrees) * 60) - ((int)((decimal - dms.degrees) * 60))) * 60;
+        // set the direction to 'S' if the decimal is a negative
+        if (decimal < 0)
+            dms.direction = 'S';
+        // set the direction to 'N' if positive
+        else 
+            dms.direction = 'N';
        
         //return it
         return dms;

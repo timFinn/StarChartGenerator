@@ -18,19 +18,38 @@ public class DMSObject {
     public double seconds;
     public char direction;
     
+    // sets the degrees
+    public void setDegrees(int degrees) {
+        this.degrees = degrees;
+    }
+    //sets the minutes
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+    // sets the seconds
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
+    // sets the direction
+    public void setDirection(char direction) {
+        this.direction = direction;
+    }
+    
     // retrieves the degrees
     public double getDegrees() {
         return degrees;
     }
-    
     // retrieves the minutes
     public double getMinutes() {
         return minutes;
     }
-    
     // retrieves the seconds
     public double getSeconds() {
         return seconds;
+    }
+    // retrieves the direction
+    public char getDirection() {
+        return direction;
     }
 }
 
