@@ -4,8 +4,8 @@
 // Author: Evan McGraw
 
 package Model;
-
 // Neccessary Imports
+import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.util.Arrays;
@@ -13,19 +13,92 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
-// This class will create a smaller CSV file containing stars of 6 magnitude or less.
+// This class will consist of functions that will utilize the 'CSVUtils' class to transfer our data from one container to another.
 public class StarParser {
+
+    String csvFile;                                                                                     // File to read from.
+    BufferedReader br = null;                                                                           // File buffer.
+    String line = "";                                                                                   // Temporary string for storage.
+    String cvsSplitBy = ",";                                                                            // Declare the seperator.
+    DecimalFormat df = new DecimalFormat("#.##");                                                       // Sets the decimal format.
+    String celestialObjectType;
+    ArrayList observableArray;
+    
+    /*************************************************************************************
+    *  Function:    CSVToArrayList
+    *  Purpose:     To generate a collection object inside of our program that contains
+    *               celestial objects, of a certain type, visible to the user.
+    *  Usage:       Given a celsetiaObjectType(string), the function will read from its 
+    *               corresponding CSV file and move the entries into an arrayList. That
+    *               array list will then be returned.
+    *  Note:        Later versions of this function will also accept parameters to 
+    *               query the CSV file for. i.e. you may want to search for all stars
+    *               within a particular declination.
+    **************************************************************************************/
+    public ArrayList CSVToArrayList(String celestialObjectType, ArrayList observableArray)
+    {
+        celestialObjectType = this.celestialObjectType;
+        observableArray = this.observableArray;
+        
+        if (celestialObjectType == "Planet") {
+            csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\Planets.csv";
+        }
+        else if (celestialObjectType == "Star") {
+            csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\Star.csv";
+        }
+        else if (celestialObjectType == "Messier") {
+            csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\Messier.csv";
+        }
+        
+        try {
+            // Create a new buffered reader and read the file until it is empty.
+            br = new BufferedReader(new FileReader(csvFile));
+            br.readLine();
+            while ((line = br.readLine()) != null) 
+            {
+                // Use comma as separator.
+                String[] entry = line.split(cvsSplitBy);
+                observableArray.add(entry);
+            }
+        }
+            // IO Exceptions.
+        catch (FileNotFoundException e) {               
+            e.printStackTrace();
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        } 
+        finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } 
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+          
+        return observableArray;
+    }
+    
+    
+    
+    /***********************************************************
+    * This section is for parsing the original 'hyg' file
+    * *********************************************************
     // Main function.
     public static void main(String[] args) throws Exception {
         
         String csvNewFile = "D:\\Evan Documents\\Senior Project\\workspace\\StarMap\\bin\\6MagStars.csv";   // File to write to.
-        String csvFile = "D:\\Evan Documents\\Senior Project\\workspace\\StarMap\\bin\\hyg.csv";            // File to read from.
+        
         BufferedReader br = null;                                                                           // File buffer.
         String line = "";                                                                                   // Temporary string for storage.
         String cvsSplitBy = ",";                                                                            // Declare the seperator.
         String magnitude;                                                                                   // Used to convert magnitude to a double.
-        FileWriter writer = new FileWriter(csvNewFile);                                                     // Creates a new FileWriter.
+        FileWriter writer = new FileWriter(csvNewFile);                                                     // Creates a new FileWriter
         
         DecimalFormat df = new DecimalFormat("#.##");                                                       // Sets the decimal format.
        
@@ -38,7 +111,8 @@ public class StarParser {
 
                 // Use comma as separator.
                 String[] star = line.split(cvsSplitBy);
-                // Set magnitude variable to the 10th entry in the table.
+                
+                // Set magnitude variable to the 10th entry in the table
                 magnitude = star[10];
 
                 if (Double.parseDouble(magnitude) <= 6.00)
@@ -68,4 +142,6 @@ public class StarParser {
             }
         }
     }
+    ************************************************************/
 }
+
