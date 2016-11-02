@@ -18,6 +18,7 @@ public class DMSObject {
     public double seconds;
     public char direction;
     
+    
     // sets the degrees
     public void setDegrees(int degrees) {
         this.degrees = degrees;
@@ -34,6 +35,7 @@ public class DMSObject {
     public void setDirection(char direction) {
         this.direction = direction;
     }
+    
     
     // retrieves the degrees
     public double getDegrees() {

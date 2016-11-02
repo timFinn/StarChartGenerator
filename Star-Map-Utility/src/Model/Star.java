@@ -25,20 +25,11 @@ public class Star extends CelestialObject {
     public String Spectrum;
     public double colorIndex;
 
-    public Star(int starID, int hip, int hd, int hr, String gilese, String bayerFlams, String properName, double rightAscension, double declination, double distance, double magnitude, double absMagnitude, String Spectrum, double colorIndex) {
+    public Star(int starID, String properName, double rightAscension, double declination, double magnitude)  
+    {
         this.starID = starID;
-        this.hip = hip;
-        this.hd = hd;
-        this.hr = hr;
-        this.gilese = gilese;
-        this.bayerFlams = bayerFlams;
         this.properName = properName;
         this.rightAscension = rightAscension;
         this.declination = declination;
-        this.distance = distance;
-        this.magnitude = magnitude;
-        this.absMagnitude = absMagnitude;
-        this.Spectrum = Spectrum;
-        this.colorIndex = colorIndex;
     }
 }

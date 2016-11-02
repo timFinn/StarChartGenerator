@@ -1,17 +1,20 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 
+ * 
+ * 
  */
 package View;
 
-import Controller.Observer;
+import Controller.*;
+import Model.*;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -182,6 +185,10 @@ public class GUI extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+//        Model.Database db = Model.Database.getDB();
+//        db.startConnection();
+        
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -205,7 +212,19 @@ public class GUI extends javax.swing.JFrame {
         }
         //</editor-fold>
         // Test Area
+        String celestialObjectType;
+        ArrayList celestialObjectArray = new ArrayList();
         
+        celestialObjectType = "Messier";
+        celestialObjectArray = new StarParser().CSVToArrayList(celestialObjectType, celestialObjectArray);
+        
+        celestialObjectType = "Planet";
+        celestialObjectArray = new StarParser().CSVToArrayList(celestialObjectType, celestialObjectArray);
+        
+        celestialObjectType = "Star";
+        celestialObjectArray = new StarParser().CSVToArrayList(celestialObjectType, celestialObjectArray);
+        
+        System.out.println(celestialObjectArray.toString());
         //
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

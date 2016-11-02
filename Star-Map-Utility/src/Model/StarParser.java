@@ -24,7 +24,7 @@ public class StarParser {
     String cvsSplitBy = ",";                                                                            // Declare the seperator.
     DecimalFormat df = new DecimalFormat("#.##");                                                       // Sets the decimal format.
     String celestialObjectType;
-    ArrayList observableArray;
+    ArrayList celestialObjectArray;
     
     /*************************************************************************************
     *  Function:    CSVToArrayList
@@ -37,18 +37,18 @@ public class StarParser {
     *               query the CSV file for. i.e. you may want to search for all stars
     *               within a particular declination.
     **************************************************************************************/
-    public ArrayList CSVToArrayList(String celestialObjectType, ArrayList observableArray)
+    public ArrayList CSVToArrayList(String celestialObjectType, ArrayList celestialObjectArray)
     {
-        celestialObjectType = this.celestialObjectType;
-        observableArray = this.observableArray;
+        this.celestialObjectType = celestialObjectType;
+        this.celestialObjectArray = celestialObjectArray;
         
-        if (celestialObjectType == "Planet") {
+        if (celestialObjectType.equals("Planet")) {
             csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\Planets.csv";
         }
-        else if (celestialObjectType == "Star") {
-            csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\Star.csv";
+        else if (celestialObjectType.equals("Star")) {
+            csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\6MagStars.csv";
         }
-        else if (celestialObjectType == "Messier") {
+        else if (celestialObjectType.equals("Messier")) {
             csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\Messier.csv";
         }
         
@@ -56,11 +56,31 @@ public class StarParser {
             // Create a new buffered reader and read the file until it is empty.
             br = new BufferedReader(new FileReader(csvFile));
             br.readLine();
+            
             while ((line = br.readLine()) != null) 
             {
-                // Use comma as separator.
-                String[] entry = line.split(cvsSplitBy);
-                observableArray.add(entry);
+                String[] entry = line.split(cvsSplitBy);                        // Use comma as separator.
+                         
+                CelestialObject objectForArray = new CelestialObject();
+                
+                if (celestialObjectType.equals("Star"))
+                {
+                    objectForArray = new Star(Integer.valueOf(entry[0]), entry[6], Double.parseDouble(entry[7]), Double.parseDouble(entry[8]), Double.parseDouble(entry[10])); 
+                }
+                
+                if (celestialObjectType.equals("Planet"))
+                {
+                    objectForArray = new Planet(entry[0], Double.parseDouble(entry[1]), Double.parseDouble(entry[2]), Double.parseDouble(entry[3]), Double.parseDouble(entry[4]), 
+                            Double.parseDouble(entry[5]), Double.parseDouble(entry[6]), Double.parseDouble(entry[7]), Double.parseDouble(entry[8]), Double.parseDouble(entry[9]), 
+                            Double.parseDouble(entry[10]), Double.parseDouble(entry[11]), Double.parseDouble(entry[12]));
+                }
+                
+                if (celestialObjectType.equals("Messier"))
+                {
+                    objectForArray = new Messier(Integer.parseInt(entry[0]), Integer.parseInt(entry[1]), entry[2], entry[3], entry[4]);
+                }
+                
+                celestialObjectArray.add(objectForArray);
             }
         }
             // IO Exceptions.
@@ -81,7 +101,7 @@ public class StarParser {
             }
         }
           
-        return observableArray;
+        return celestialObjectArray;
     }
     
     
