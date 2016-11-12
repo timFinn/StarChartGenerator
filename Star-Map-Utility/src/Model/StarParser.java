@@ -77,7 +77,7 @@ public class StarParser {
                 
                 if (celestialObjectType.equals("Messier"))
                 {
-                    objectForArray = new Messier(Integer.parseInt(entry[0]), Integer.parseInt(entry[1]), entry[2], entry[3], entry[4]);
+                    objectForArray = new Messier(Integer.parseInt(entry[0]), Integer.parseInt(entry[1]), entry[2], entry[3], entry[4], entry[5]);
                 }
                 
                 celestialObjectArray.add(objectForArray);
