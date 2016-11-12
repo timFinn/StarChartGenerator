@@ -13,6 +13,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -183,8 +185,13 @@ public class GUI extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+<<<<<<< HEAD
+//        Model.Database db = Model.Database.getDB();
+//        db.startConnection();
+=======
         Model.Database db = Model.Database.getDB();
         db.startConnection();
+>>>>>>> master
         
         
         /* Set the Nimbus look and feel */
@@ -210,7 +217,19 @@ public class GUI extends javax.swing.JFrame {
         }
         //</editor-fold>
         // Test Area
+        String celestialObjectType;
+        ArrayList celestialObjectArray = new ArrayList();
         
+        celestialObjectType = "Messier";
+        celestialObjectArray = new StarParser().CSVToArrayList(celestialObjectType, celestialObjectArray);
+        
+        celestialObjectType = "Planet";
+        celestialObjectArray = new StarParser().CSVToArrayList(celestialObjectType, celestialObjectArray);
+        
+        celestialObjectType = "Star";
+        celestialObjectArray = new StarParser().CSVToArrayList(celestialObjectType, celestialObjectArray);
+        
+        System.out.println(celestialObjectArray.toString());
         //
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
