@@ -18,6 +18,9 @@ public class Observer {
     public double longitude;
     public Date observedDate;
     public Date observedTime;
+    
+    private int dayNum;
+    
 
     public Observer(double latitude, double longitude, Date observedDate, Date observedTime) {
         this.latitude = latitude;
@@ -30,5 +33,10 @@ public class Observer {
         System.out.println(observedDate);
         System.out.println(observedTime);
     }    
+    
+    public int DateToDayNum()
+    {
+        return dayNum;
+    }
     
 }

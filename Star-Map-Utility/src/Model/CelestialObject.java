@@ -19,6 +19,4 @@ public class CelestialObject {
     public CelestialObject() {
 
     }
-    
-    
 }
