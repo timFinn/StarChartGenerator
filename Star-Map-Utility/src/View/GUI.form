@@ -106,6 +106,9 @@
         <Property name="text" type="java.lang.String" value="00.000000"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="longEnteredActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="latEntered">
       <Properties>
@@ -114,7 +117,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="submitButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Submit Query"/>
+        <Property name="text" type="java.lang.String" value="Generate Map"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="submitButtonActionPerformed"/>
