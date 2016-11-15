@@ -187,6 +187,65 @@ public class GUI extends javax.swing.JFrame {
     public static void main(String args[]) {
 //        Model.Database db = Model.Database.getDB();
 //        db.startConnection();
-        Model.Database db = Model.Database.getDB();
-        db.startConnection();
         
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        // Test Area
+        DBscrubber scrub = new DBscrubber();
+        scrub.createLists();
+//        String celestialObjectType;
+//        ArrayList celestialObjectArray = new ArrayList();
+//        
+//        celestialObjectType = "Messier";
+//        celestialObjectArray = new StarParser().CSVToArrayList(celestialObjectType, celestialObjectArray);
+//        
+//        celestialObjectType = "Planet";
+//        celestialObjectArray = new StarParser().CSVToArrayList(celestialObjectType, celestialObjectArray);
+//        
+//        celestialObjectType = "Star";
+//        celestialObjectArray = new StarParser().CSVToArrayList(celestialObjectType, celestialObjectArray);
+//        
+//        System.out.println(celestialObjectArray.toString());
+        //
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GUI().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField dateEntered;
+    private javax.swing.JLabel dateLabel;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField latEntered;
+    private javax.swing.JLabel latLabel;
+    private javax.swing.JTextField longEntered;
+    private javax.swing.JLabel longLabel;
+    private javax.swing.JButton submitButton;
+    private javax.swing.JTextField timeEntered;
+    private javax.swing.JLabel timeLabel;
+    // End of variables declaration//GEN-END:variables
+}
