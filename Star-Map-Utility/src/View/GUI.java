@@ -8,6 +8,7 @@ package View;
 import Controller.*;
 import Model.*;
 import java.util.Date;
+import java.time.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,8 +26,8 @@ public class GUI extends javax.swing.JFrame {
 
     private double latConverted;
     private double longConverted;
-    private Date dateConverted;
-    private Date timeConverted;
+    private LocalDate dateConverted;
+    private LocalTime timeConverted;
     
     /**
      * Creates new form GUI
@@ -68,7 +69,7 @@ public class GUI extends javax.swing.JFrame {
 
         latEntered.setText("00.000000");
 
-        submitButton.setText("Submit Query");
+        submitButton.setText("Generate Map");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitButtonActionPerformed(evt);
@@ -83,9 +84,12 @@ public class GUI extends javax.swing.JFrame {
 
         timeLabel.setText("Time");
 
-        dateEntered.setText("MM/dd/yyyy");
+        dateEntered.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        dateEntered.setText("yyyy-MM-dd");
 
-        timeEntered.setText("23:59:59 CST");
+        timeEntered.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        timeEntered.setText("23:59:59");
+        timeEntered.setToolTipText("HH:mm:ss");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,15 +106,15 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(timeLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(timeEntered, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(latEntered, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(longEntered, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(dateEntered, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(dateEntered, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(timeEntered, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addComponent(submitButton)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {latEntered, longEntered});
@@ -145,49 +149,17 @@ public class GUI extends javax.swing.JFrame {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
         latConverted = Double.parseDouble(latEntered.getText());
-        longConverted = Double.parseDouble(longEntered.getText());
+        longConverted = Double.parseDouble(longEntered.getText());        
+        dateConverted = LocalDate.parse(dateEntered.getText());                        
+        timeConverted = LocalTime.parse(timeEntered.getText());
         
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");             
-        try
-        {
-            dateConverted = df.parse(dateEntered.getText());
-
-        } catch(ParseException e)
-                {
-                    e.printStackTrace();
-                    System.out.println("Date format incorrect. Try again.");
-                    JOptionPane.showMessageDialog(new JDialog(),
-                                                    "Date format incorrect. Try again.",
-                                                    "Warning!",
-                                                    JOptionPane.WARNING_MESSAGE);
-                }
-        
-        DateFormat tf = new SimpleDateFormat("HH:mm:ss z");             
-        
-        try
-        {
-            timeConverted = tf.parse(timeEntered.getText());
-
-        } catch(ParseException e)
-                {
-                    e.printStackTrace();
-                    System.out.println("Time format incorrect. Try again.");
-                    JOptionPane.showMessageDialog(new JDialog(),
-                                                    "Time format incorrect. Try again.",
-                                                    "Warning!",
-                                                    JOptionPane.WARNING_MESSAGE);
-                }
-        
-        Controller.Observer observed = new Observer(latConverted, longConverted, dateConverted, timeConverted);
+        Controller.SkySearch ss = new SkySearch(latConverted, longConverted, dateConverted, timeConverted);
     }//GEN-LAST:event_submitButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-//        Model.Database db = Model.Database.getDB();
-//        db.startConnection();
-        
+    public static void main(String args[]) {        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -210,23 +182,7 @@ public class GUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        // Test Area
-        DBscrubber scrub = new DBscrubber();
-        scrub.createLists();
-//        String celestialObjectType;
-//        ArrayList celestialObjectArray = new ArrayList();
-//        
-//        celestialObjectType = "Messier";
-//        celestialObjectArray = new StarParser().CSVToArrayList(celestialObjectType, celestialObjectArray);
-//        
-//        celestialObjectType = "Planet";
-//        celestialObjectArray = new StarParser().CSVToArrayList(celestialObjectType, celestialObjectArray);
-//        
-//        celestialObjectType = "Star";
-//        celestialObjectArray = new StarParser().CSVToArrayList(celestialObjectType, celestialObjectArray);
-//        
-//        System.out.println(celestialObjectArray.toString());
-        //
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

@@ -53,12 +53,12 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="timeEntered" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                               <Component id="latEntered" linkSize="1" min="-2" max="-2" attributes="0"/>
                               <Component id="longEntered" linkSize="1" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="dateEntered" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="dateEntered" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="timeEntered" alignment="1" min="-2" pref="74" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -66,7 +66,7 @@
                       <Component id="submitButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -106,9 +106,6 @@
         <Property name="text" type="java.lang.String" value="00.000000"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="longEnteredActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="latEntered">
       <Properties>
@@ -145,12 +142,15 @@
     </Component>
     <Component class="javax.swing.JTextField" name="dateEntered">
       <Properties>
-        <Property name="text" type="java.lang.String" value="MM/dd/yyyy"/>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="yyyy-MM-dd"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="timeEntered">
       <Properties>
-        <Property name="text" type="java.lang.String" value="23:59:59 CST"/>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="23:59:59"/>
+        <Property name="toolTipText" type="java.lang.String" value="HH:mm:ss"/>
       </Properties>
     </Component>
   </SubComponents>
