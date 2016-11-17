@@ -20,10 +20,7 @@ public class Observer {
     public double latitude;
     public double longitude;
     public LocalDate observedDate;
-    public LocalTime observedTime;
-    
-    private int dayNum;
-    
+    public LocalTime observedTime;        
 
     private Observer(double latitude, double longitude, LocalDate observedDate, LocalTime observedTime) {
         this.latitude = latitude;
@@ -47,11 +44,5 @@ public class Observer {
             singletonObserver = new Observer(latitude, longitude, observedDate, observedTime);
         }
         return singletonObserver;
-    }
-    
-    public int DateToDayNum()
-    {
-        return dayNum;
-    }
-    
+    }        
 }

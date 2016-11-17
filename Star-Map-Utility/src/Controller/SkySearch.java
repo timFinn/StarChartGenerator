@@ -49,9 +49,9 @@ public class SkySearch {
         celestialObjectType = "Star";
         starArray = new StarParser().CSVToArrayList(celestialObjectType, starArray);
         
-        System.out.println(messierArray.toString());
-        System.out.println(planetArray.toString());
-        System.out.println(starArray.toString());
+        //System.out.println(messierArray.toString());
+        //System.out.println(planetArray.toString());
+        //System.out.println(starArray.toString());
     }
     
     public void calcSpaceTimeWindow()
