@@ -148,7 +148,8 @@ public class GUI extends javax.swing.JFrame {
         timeConverted = LocalTime.parse(timeEntered.getText());
         
         Controller.SkySearch ss = new SkySearch(latConverted, longConverted, dateConverted, timeConverted);
-        ss.generateChart();
+        //ss.generateChart();
+        JOGLtests jt = new JOGLtests();
     }//GEN-LAST:event_submitButtonActionPerformed
 
     /**

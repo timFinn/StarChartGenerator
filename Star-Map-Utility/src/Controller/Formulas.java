@@ -320,8 +320,8 @@ public class Formulas {
     {
         
         
-        declination = ;
-        rightAsc = ;
+        //declination = ;
+        //rightAsc = ;
     }   
     
     public double getRA()
