@@ -54,8 +54,34 @@ public class SkySearch {
         //System.out.println(starArray.toString());
     }
     
+    public ArrayList getStars()
+    {
+        return starArray;
+    }
+    
+    public ArrayList getPlanets()
+    {
+        return planetArray;
+    }
+    
+    public ArrayList getMessier()
+    {
+        return messierArray;
+    }
+    
     public void calcSpaceTimeWindow()
+    {        
+        double gms = frm.calcMeanSidereal();
+        System.out.println(gms);
+    }
+    
+    public void calcPlants()
     {
         
+    }
+    
+    public void tester()
+    {
+        calcSpaceTimeWindow();
     }
 }

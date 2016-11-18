@@ -27,7 +27,7 @@ public class Formulas {
     private double altitude;
     private double azimuth;        
     private double localSidereal;
-    private double greenwichSidereal;
+    private double greenwichSidereal;   //AKA mean sidereal
     private double orbitEccentricity;
     private double hourAngle;
     private double eclipticObliquity;
@@ -192,10 +192,10 @@ public class Formulas {
     /*Given Year (year), Month (month with January = 1), Day (day) of the 
     month, Hour (hour) on a 24 hour clock, Minute (min), Second (sec). All 
     times must be measured from Greenwich mean time (TimeZone = 0).*/
-    public void calcMeanSidereal()
+    public double calcMeanSidereal()
     {
         if(month <= 2) 
-            year --;
+            year--;
         // Adjust month and year if needed
             month = month + 12;
             double a = floor(year / 100.0);
@@ -203,16 +203,19 @@ public class Formulas {
             double c = floor(365.25 * year);
             double d = floor(30.6001 * (month + 1));
             // Get days since J2000.0
-            double jd = b + c + d - 730550.5 + day + (hour + minutes/60 + seconds/3600) / 24; // Get Julian centuries since J2000.0
+            double jd = b + c + d - 730550.5 + day + (hour + minutes/60 + seconds/3600) / 24; 
+            // Get Julian centuries since J2000.0
             double jt = jd / 36525.0;
-            // Calculate initial Mean Sidereal Time (mst)
-            double mst = 280.46061837 + (360.98564736629 * jd) + (0.000387933 * (jt*jt)) - ((jt*jt*jt) / 38710000) + observedLong; // Clip mst to range 0.0 to 360.0
-            if(mst > 0.0)
-                while(mst > 360.0) 
-                    mst -= 360.0;
+            // Calculate initial Mean Sidereal Time (greenwichSidereal)
+            double greenwichSidereal = 280.46061837 + (360.98564736629 * jd) + (0.000387933 * (jt*jt)) - ((jt*jt*jt) / 38710000) + observedLong; 
+            // Clip greenwichSidereal to range 0.0 to 360.0
+            if(greenwichSidereal > 0.0)
+                while(greenwichSidereal > 360.0) 
+                    greenwichSidereal -= 360.0;
             else
-                while(mst < 0.0) 
-                    mst += 360.0;
+                while(greenwichSidereal < 0.0) 
+                    greenwichSidereal += 360.0;
+        return greenwichSidereal;
     }       
 
     public void calcMoonPhase()
