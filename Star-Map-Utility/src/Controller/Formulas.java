@@ -46,13 +46,7 @@ public class Formulas {
     private int minutes;
     private int seconds;
     private LocalTime time;
-    private LocalDate date;       
-
-    private double semimajorAxis;
-    private double eclipticInclination;
-    private double perihelionArgument;
-    private double ascendingNodeLong;
-    private double planetMeanLong;
+    private LocalDate date;           
 
     private double convertedAngle;
 
@@ -119,53 +113,54 @@ public class Formulas {
     }
 
     public void calcRelativeJD()
-    {
-        double dd = date.getDayOfYear() + (time.getHour()/24) + (time.getMinute()/60);
+    {        
         julianDate = (367 * date.getYear()) 
                 - (Math.floor(7.0 * (date.getYear() + Math.floor((date.getMonthValue() + 9.0)/12.0))/4.0))
                 + (Math.floor(275.0 * date.getMonthValue()/9.0))
-                + date.getDayOfYear() - 730531.5 + dd/24.0;
+                + date.getDayOfMonth() - 730531.5 + time.getHour()/24.0;
     }
 
-    public void cy()
+    public int cy()
     {
         calYear = (int) (julianDate/36525);
+        return calYear;
     }
 
-    public double Deg2Rad()
+    public double RADS()
     {
         return Math.PI / 180.0;
     }
 
-    public double Rad2Deg()
+    public double DEGS()
     {
         return 180 / Math.PI;
     }
 
-    public void Mod2Pi(double X)
+    public double Mod2Pi(double X)
     {
         //Given angle X in radians B=X/2π
         double b = X/(2 * Math.PI);
         double A = (2 * Math.PI) * (b - abs_floor(b));
 
         if(A < 0)
-            {
-                A = (2 * Math.PI) + A;
-                convertedAngle = A;
-            }
+        {
+            A = (2 * Math.PI) + A;
+        }
+        convertedAngle = A;
+        return convertedAngle;
     }
 
     public void convertRAdeg2HMS()
     {
-
+        
     }
 
     public void convertDECdeg2DMS()
     {
-
+        
     }
 
-    public double calcTrueAnomaly(double e, double M)
+    public double calcTrueAnomaly(double M, double e)
     {
         double V;
         double E = M + e * Math.sin(M) * (1.0 + e * Math.cos(M));
@@ -189,6 +184,7 @@ public class Formulas {
     {
 
     }
+    
     /*Given Year (year), Month (month with January = 1), Day (day) of the 
     month, Hour (hour) on a 24 hour clock, Minute (min), Second (sec). All 
     times must be measured from Greenwich mean time (TimeZone = 0).*/
@@ -279,5 +275,62 @@ public class Formulas {
         {
             return Math.ceil(b);                
         }
+    }
+  
+//
+//  Planetary calculations for determining elements used in orbital calculations
+//    
+    public double calcSemiAxis(double Ascal, double Aprop)
+    {
+        double semiAxis = Ascal + Aprop * cy();
+        return semiAxis;
+    }
+    
+    public double calcEccentricity(double Escal, double Eprop)
+    {
+        double eccen = Escal + Eprop * cy();
+        return eccen;
+    }
+    
+    public double calcPlaneInclination(double Iscal, double Iprop)
+    {
+        double ecliptInc = ( Iscal - Iprop * cy() / 3600) * RADS();
+        return ecliptInc;
+    }
+    
+    public double calcPerihelion(double Wscal, double Wprop)
+    {
+        double periArg = (Wscal + Wprop * cy() / 3600) * RADS();
+        return periArg;
+    }
+    
+    public double calcLongAscNode(double Oscal, double Oprop)
+    {
+        double longAscNode = (Oscal - Oprop * cy() / 3600) * RADS();
+        return longAscNode;
+    }
+    
+    public double calcMeanLong(double Lscal, double Lprop)
+    {
+        double meanLong = Mod2Pi ((Lscal + Lprop * cy() / 3600) * RADS());
+        return meanLong;
+    }    
+    
+    public void calcRAdec()
+    {
+        
+        
+        declination = ;
+        rightAsc = ;
+    }   
+    
+    public double getRA()
+    {
+        return rightAsc;
+    }
+    
+    public double getDec()
+    {
+        return declination;
     }
 }

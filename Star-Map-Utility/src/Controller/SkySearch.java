@@ -5,18 +5,20 @@
  */
 package Controller;
 
-import Model.StarParser;
+import Model.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
  * @author timothy
  */
 public class SkySearch {
-    private Formulas frm;
-    private Observer obs;
+    private final Formulas frm;
+    private final Observer obs;
+    private Planet planet;
     
     private ArrayList starArray;
     private ArrayList planetArray;
@@ -75,13 +77,34 @@ public class SkySearch {
         System.out.println(gms);
     }
     
-    public void calcPlants()
+    public void calcPlanets()
     {
+        Iterator<Planet> planetIt = planetArray.iterator();
         
+        while(planetIt.hasNext())
+        {
+            planet = planetIt.next();
+            double s = frm.calcSemiAxis(planet.getaScal(), planet.getaProp());
+            double e = frm.calcEccentricity(planet.geteScal(), planet.geteProp());
+            double i = frm.calcPlaneInclination(planet.getiScal(), planet.getiProp());
+            double p = frm.calcPerihelion(planet.getwScal(), planet.getwProp());
+            double l = frm.calcLongAscNode(planet.getoScal(), planet.getoProp());
+            double m = frm.calcMeanLong(planet.getlScal(), planet.getlProp());            
+            
+            planet.setElements(s, e, i, p, l, m);
+            frm.calcRAdec();
+            planet.setRAdec(frm.getRA(), frm.getDec());
+        }
     }
     
-    public void tester()
+    public void generateChart()
     {
         calcSpaceTimeWindow();
+        calcPlanets();
+        //drawshit
+        /*
+            relative lat and long are the origin for calculating the viewport
+            
+        */
     }
 }

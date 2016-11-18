@@ -10,19 +10,29 @@ package Model;
  * @author Your Name <timothy>
  */
 public class Planet extends CelestialObject {
-    public String planetName;
-    public double lScal;
-    public double lProp;
-    public double aScal;
-    public double aProp;
-    public double eScal;
-    public double eProp;
-    public double iScal;
-    public double iProp;
-    public double wScal;
-    public double wProp;
-    public double oScal;
-    public double oProp;
+    private String planetName;
+    private double lScal;
+    private double lProp;
+    private double aScal;
+    private double aProp;
+    private double eScal;
+    private double eProp;
+    private double iScal;
+    private double iProp;
+    private double wScal;
+    private double wProp;
+    private double oScal;
+    private double oProp;
+    
+    private double semimajorAxis;
+    private double eccentricity;
+    private double inclination;
+    private double perihelion;
+    private double longAscNode;
+    private double meanLong;
+    
+    private double rightAsc;
+    private double declination;
 
     public Planet(String planetName, double lScal, double lProp, double aScal, double aProp, double eScal, double eProp, double iScal, double iProp, double wScal, double wProp, double oScal, double oProp) {
         this.planetName = planetName;
@@ -37,51 +47,70 @@ public class Planet extends CelestialObject {
         this.wScal = wScal;
         this.wProp = wProp;
         this.oScal = oScal;
-        this.oProp = oProp;
+        this.oProp = oProp;       
     }
     
-    public void calcMercury()
+    public void setElements(double s, double e, double i, double p, double l, double m)
     {
-        
-    }
+        semimajorAxis = s;
+        eccentricity = e;
+        inclination = i;
+        perihelion = p;
+        longAscNode = l;
+        meanLong = m;
+    }        
     
-    public void calcVenus()
+    public void setRAdec(double r, double d)
     {
-        
+        rightAsc = r;
+        declination = d;
     }
-    
-    public void calcEarth()
-    {
-        
+
+    public double getlScal() {
+        return lScal;
     }
-    
-    public void calcMars()
-    {
-        
+
+    public double getlProp() {
+        return lProp;
     }
-    
-    public void calcJupiter()
-    {
-        
+
+    public double getaScal() {
+        return aScal;
     }
-    
-    public void calcSaturn()
-    {
-        
+
+    public double getaProp() {
+        return aProp;
     }
-    
-    public void calcUranus()
-    {
-        
+
+    public double geteScal() {
+        return eScal;
     }
-    
-    public void calcNeptune()
-    {
-        
+
+    public double geteProp() {
+        return eProp;
     }
-    
-    public void calcPluto()
-    {
-        
+
+    public double getiScal() {
+        return iScal;
+    }
+
+    public double getiProp() {
+        return iProp;
+    }
+
+    public double getwScal() {
+        return wScal;
+    }
+
+    public double getwProp() {
+        return wProp;
+    }
+
+    public double getoScal() {
+        return oScal;
+    }
+
+    public double getoProp() {
+        return oProp;
     }
 }
