@@ -14,15 +14,15 @@ import java.util.Date;
  * @author Your Name <timothy>
  */
 public class Observer {
+    
+    static private Observer singletonObserver = null;
+    
     public double latitude;
     public double longitude;
-    public Date observedDate;
-    public Date observedTime;
-    
-    private int dayNum;
-    
+    public LocalDate observedDate;
+    public LocalTime observedTime;        
 
-    public Observer(double latitude, double longitude, Date observedDate, Date observedTime) {
+    private Observer(double latitude, double longitude, LocalDate observedDate, LocalTime observedTime) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.observedDate = observedDate;
@@ -32,11 +32,17 @@ public class Observer {
         System.out.println(longitude);
         System.out.println(observedDate);
         System.out.println(observedTime);
+        
+        System.out.println(observedTime.getHour());
+        System.out.println(observedTime.getMinute());
+        System.out.println(observedTime.getSecond());        
     }    
-    
-    public int DateToDayNum()
+    public static Observer getObserver(double latitude, double longitude, LocalDate observedDate, LocalTime observedTime)
     {
-        return dayNum;
-    }
-    
+        if(singletonObserver == null)
+        {
+            singletonObserver = new Observer(latitude, longitude, observedDate, observedTime);
+        }
+        return singletonObserver;
+    }        
 }
