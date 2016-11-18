@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package JOGLtests;
+package View;
 import com.jogamp.newt.Display;
 import com.jogamp.newt.NewtFactory;
 import com.jogamp.newt.Screen;
@@ -35,17 +35,14 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     public static GLWindow glWindow;
     public static Animator animator;
     private GLUT glut = new GLUT(); //to use glut commands
-    private double sphereSize = 100; //FIXME this defines the size of our sphere
-    
-    public JOGLtests() {
-        //placeholder, copy paste from main eventually
-    }
+    private double sphereSize = 100; //FIXME this defines the size of our sphere   
     
     /**
      * @param args the command line arguments
      */
     
-    public static void main(String[] args) {
+    //public static void main(String[] args) {
+    public JOGLtests(){
         //standard implementation template
         Display display = NewtFactory.createDisplay(null,true);
         Screen screen = NewtFactory.createScreen(display, 0);
@@ -84,7 +81,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         gl2.glMatrixMode(GL2.GL_PROJECTION);
         gl2.glLoadIdentity();
         //may need to fix this
-        gl2.glOrtho(-500, -500, 500, 500, 1, 500); //FIXME
+        gl2.glOrtho(-500, 500, -500, 500, 1, 500); //FIXME
         gl2.glMatrixMode(GL2.GL_MODELVIEW);
         gl2.glClearColor(1, 1, 1, 1);
         gl2.glClear(GL.GL_COLOR_BUFFER_BIT);
