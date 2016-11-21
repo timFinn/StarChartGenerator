@@ -19,6 +19,7 @@ public class SkySearch {
     private final Formulas frm;
     private final Observer obs;
     private Planet planet;
+    private Planet earth;
     
     private ArrayList starArray;
     private ArrayList planetArray;
@@ -71,10 +72,11 @@ public class SkySearch {
         return messierArray;
     }
     
-    public void calcSpaceTimeWindow()
+    public double calcSpaceTimeWindow()
     {        
         double gms = frm.calcMeanSidereal();
         System.out.println(gms);
+        return gms;
     }
     
     public void calcPlanets()
@@ -92,18 +94,28 @@ public class SkySearch {
             double m = frm.calcMeanLong(planet.getlScal(), planet.getlProp());            
             
             planet.setElements(s, e, i, p, l, m);
-            frm.calcRAdec();
+            frm.calcRAdec(planet, earth);
             planet.setRAdec(frm.getRA(), frm.getDec());
         }
     }
     
+    public void findEarth()
+    {
+        earth = (Planet) planetArray.get(2);        
+    }
+    
     public void generateChart()
     {
+        createLists();
         calcSpaceTimeWindow();
+        
+        findEarth();
         calcPlanets();
+        System.out.println("planets done");
         //drawshit
         /*
             relative lat and long are the origin for calculating the viewport
+        //JOGLtests jt = new JOGLtests();
             
         */
     }

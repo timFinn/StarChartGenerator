@@ -6,6 +6,7 @@
 package Controller;
 
 import Controller.Observer;
+import Model.*;
 import static java.lang.Math.floor;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -316,12 +317,49 @@ public class Formulas {
         return meanLong;
     }    
     
-    public void calcRAdec()
+    public void calcRAdec(Planet plnt, Planet earth)
     {
-        
-        
-        //declination = ;
-        //rightAsc = ;
+        //calculate earths orbital position        
+        double m_e = Mod2Pi(earth.getLongAscNode() - earth.getPerihelion());
+        double v_e = calcTrueAnomaly(m_e, earth.getEccentricity());
+        double r_e = earth.getSemimajorAxis() * (1-(earth.getEccentricity()*earth.getEccentricity())) / (1+earth.getEccentricity()*Math.cos(v_e));
+        //calculate heliocentric rectangular coordinates of earth
+        double x_e = r_e * Math.cos(v_e + earth.getPerihelion());
+        double y_e = r_e * Math.sin(v_e + earth.getPerihelion());
+        double z_e = 0.0;
+        //calculate positon of the current planet in its orbit
+        double m_p = Mod2Pi(plnt.getLongAscNode() - plnt.getPerihelion());
+        double v_p = calcTrueAnomaly(m_p, plnt.getEccentricity());
+        double r_p = plnt.getSemimajorAxis() * (1-(plnt.getEccentricity()*plnt.getEccentricity())) / (1+plnt.getEccentricity()*Math.cos(v_p));;
+        //calculate the heliocentric rectangular coordinates of the current planet
+        double x_h;
+        double y_h;
+        double z_h;
+        if(plnt.getPlanetName() == "Earth/Sun")
+        {
+            x_h = 0.0;
+            y_h = 0.0;
+            z_h = 0.0;
+        }
+        else
+        {
+            x_h = r_p * (Math.cos(plnt.getLongAscNode()) * Math.cos(v_p + plnt.getPerihelion() - plnt.getLongAscNode()) - Math.sin(plnt.getLongAscNode()) * Math.sin(v_p + plnt.getPerihelion() - plnt.getLongAscNode()) * Math.cos(plnt.getInclination()));
+            y_h = r_p * (Math.sin(plnt.getLongAscNode()) * Math.cos(v_p + plnt.getPerihelion() - plnt.getLongAscNode()) + Math.cos(plnt.getLongAscNode()) * Math.sin(v_p + plnt.getPerihelion() - plnt.getLongAscNode()) * Math.cos(plnt.getInclination()));
+            z_h = r_p * (Math.sin(v_p + plnt.getPerihelion() - plnt.getLongAscNode()) * Math.sin(plnt.getInclination()));
+        }
+        //convert to geocentric rectangular coordinates
+        double x_g = x_h - x_e;
+        double y_g = y_h - y_e;
+        double z_g = z_h - z_e;
+        //rotate around X axis from ecliptic to equatorial coordinates
+        double ecl = 23.439281 * RADS();
+        double xeq = x_g;
+        double yeq = y_g * Math.cos(ecl) - z_g * Math.sin(ecl);
+        double zeq = y_g * Math.sin(ecl) + z_g * Math.cos(ecl);
+        //calculate RA and dec from rectangular equatorial coordinates        
+        rightAsc = Mod2Pi(Math.atan2(yeq, xeq) * DEGS());
+        declination = Math.atan(zeq / (Math.sqrt(xeq*xeq + yeq*yeq)) * DEGS());
+        double distance = Math.sqrt((xeq*xeq) + (yeq*yeq) + (zeq*zeq));
     }   
     
     public double getRA()

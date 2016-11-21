@@ -113,4 +113,42 @@ public class Planet extends CelestialObject {
     public double getoProp() {
         return oProp;
     }
+
+    public String getPlanetName() {
+        return planetName;
+    }
+
+    public double getSemimajorAxis() {
+        return semimajorAxis;
+    }
+
+    public double getEccentricity() {
+        return eccentricity;
+    }
+
+    public double getInclination() {
+        return inclination;
+    }
+
+    public double getPerihelion() {
+        return perihelion;
+    }
+
+    public double getLongAscNode() {
+        return longAscNode;
+    }
+
+    public double getMeanLong() {
+        return meanLong;
+    }
+
+    public double getRightAsc() {
+        return rightAsc;
+    }
+
+    public double getDeclination() {
+        return declination;
+    }
+    
+    
 }

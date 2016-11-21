@@ -79,7 +79,7 @@ public class GUI extends javax.swing.JFrame {
         timeLabel.setText("Time");
 
         dateEntered.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        dateEntered.setText("yyyy-MM-dd");
+        dateEntered.setText("2010-05-18");
 
         timeEntered.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         timeEntered.setText("23:59:59");
@@ -148,8 +148,7 @@ public class GUI extends javax.swing.JFrame {
         timeConverted = LocalTime.parse(timeEntered.getText());
         
         Controller.SkySearch ss = new SkySearch(latConverted, longConverted, dateConverted, timeConverted);
-        //ss.generateChart();
-        JOGLtests jt = new JOGLtests();
+        ss.generateChart();
     }//GEN-LAST:event_submitButtonActionPerformed
 
     /**

@@ -83,8 +83,8 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         //may need to fix this
         gl2.glOrtho(-500, 500, -500, 500, 1, 500); //FIXME
         gl2.glMatrixMode(GL2.GL_MODELVIEW);
-        gl2.glClearColor(1, 1, 1, 1);
-        gl2.glClear(GL.GL_COLOR_BUFFER_BIT);
+        //gl2.glClearColor(1, 1, 1, 1);
+        //gl2.glClear(GL.GL_COLOR_BUFFER_BIT);
         //GL4 gl4 = drawable.getGL().getGL4();
         //draw stars here FIXME       
         //loop here
