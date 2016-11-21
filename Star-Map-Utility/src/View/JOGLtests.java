@@ -41,7 +41,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     public static GLWindow glWindow;
     public static Animator animator;
     private GLUT glut = new GLUT(); //to use glut commands
-    private double sphereSize = 250; //FIXME this defines the size of our sphere  
+    private double sphereSize = 450; //FIXME this defines the size of our sphere  
     private double modifier = 1; //FIXME this is so that things look right
     private double lat = 0; //FIXME
     private double longitude=0; //FIXME
@@ -72,7 +72,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         this.planetArray=planets;
         //this.constellation.addAll(constellation);
        // starIt = starArray.iterator();
-        System.out.println("iterator created");
+      //  System.out.println("iterator created");
        
         Display display = NewtFactory.createDisplay(null,true);
         Screen screen = NewtFactory.createScreen(display, 0);
@@ -153,11 +153,11 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         gl2.glMatrixMode(GL2.GL_PROJECTION);
         gl2.glLoadIdentity();
         //may need to fix this
-        gl2.glOrtho(-300, 300, -300, 300, 0, 300); //FIXME FUCK FUCK
+        gl2.glOrtho(-500, 500, -500, 500, 0, 1000); //FIXME FUCK FUCK
         gl2.glMatrixMode(GL2.GL_MODELVIEW);
         
      //TEST CODE TO SEE UNIVERSE FIXME
-     //   gl2.glTranslated(0,0,250);
+        gl2.glTranslated(0,0,-this.sphereSize);
        
         //gl2.glViewport(0, 0, 1000, 1000); //make sure same as setSize FIXME
         //this.display;
@@ -211,7 +211,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         //    System.out.println("am I in star?");
             double ra = this.convertHoursToRadians(currentStar.rightAscension); //converts
             double rd = Math.toRadians(currentStar.declination); //FIXME possibly need to convert for radian
-            if((ra>=Math.PI/2)&&(ra<=3*Math.PI/2)) { //if negative radian, convert
+            if((ra>=Math.PI/2)&&(ra<=3*Math.PI/2)) { //if on opposite side of earth convert rd
                 if(rd>0) {
                     rd+= Math.PI; //add pi to put it on the other side of the planet? 
                 } else {
