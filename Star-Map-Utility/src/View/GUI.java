@@ -144,12 +144,14 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         latConverted = Double.parseDouble(latEntered.getText());
         longConverted = Double.parseDouble(longEntered.getText());        
-        dateConverted = LocalDate.parse(dateEntered.getText());                        
+        //dateConverted = LocalDate.parse(dateEntered.getText());                        
+        dateConverted = LocalDate.parse("1983-02-22");
         timeConverted = LocalTime.parse(timeEntered.getText());
         
         Controller.SkySearch ss = new SkySearch(latConverted, longConverted, dateConverted, timeConverted);
-        //ss.generateChart();
-        JOGLtests jt = new JOGLtests();
+        
+        ss.generateChart();
+    //    JOGLtests jt = new JOGLtests();
     }//GEN-LAST:event_submitButtonActionPerformed
 
     /**

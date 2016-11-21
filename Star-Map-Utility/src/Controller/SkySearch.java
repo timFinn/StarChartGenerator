@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.*;
+import View.JOGLtests;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -28,9 +29,13 @@ public class SkySearch {
     private double maxRA;
     private double minDec;
     private double maxDec;
+    private double latitude;
+    private double longitude;
     
     public SkySearch(double latConverted, double longConverted, LocalDate dateConverted, LocalTime timeConverted)
     {
+        latitude = latConverted;
+        longitude = longConverted;
         obs = Observer.getObserver(latConverted, longConverted, dateConverted, timeConverted);
         frm = Formulas.getFormulas(timeConverted, dateConverted, latConverted, longConverted);
     }
@@ -97,14 +102,18 @@ public class SkySearch {
         }
     }
     
-    public void generateChart()
+  public void generateChart()
     {
         calcSpaceTimeWindow();
-        calcPlanets();
-        //drawshit
+        //calcPlanets();
+        this.createLists();
+        //TEST FILE DELETE ME FIXME
+             ArrayList constellation = new ArrayList<>();
+        JOGLtests jt = new JOGLtests( this.starArray,this.messierArray, this.planetArray,  constellation,
+            this.latitude,  this.longitude);
         /*
             relative lat and long are the origin for calculating the viewport
-            
+           
         */
     }
 }
