@@ -211,7 +211,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         //    System.out.println("am I in star?");
             double ra = this.convertHoursToRadians(currentStar.rightAscension); //converts
             double rd = Math.toRadians(currentStar.declination); //FIXME possibly need to convert for radian
-            if((ra>=Math.PI/2)&&(ra<=3*Math.PI/2)) { //if on opposite side of earth convert rd
+      /*      if((ra>=Math.PI/2)&&(ra<=3*Math.PI/2)) { //if on opposite side of earth convert rd
                 if(rd>0) {
                     rd+= Math.PI; //add pi to put it on the other side of the planet? 
                 } else {
@@ -219,6 +219,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
                 }
                 
             }
+            */
           //  System.out.println(rd);
             double mag = -currentStar.magnitude+7; //FIXME to make it relative
            // String name = currentStar.properName;
@@ -330,9 +331,9 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         //convert to x,y,z location
         double x, y, z;
         //FIXME do I need to convert RA into degree/radian/etc.
-        x = this.sphereSize*sin(rd)*cos(ra);
-        y = this.sphereSize*sin(rd)*sin(ra);
-        z = this.sphereSize*cos(rd);
+        x = this.sphereSize*cos(rd)*cos(ra);
+        z = this.sphereSize*cos(rd)*sin(ra);
+        y = this.sphereSize*sin(rd);
         
      //   System.out.println(x+", "+y+", "+z);
 
