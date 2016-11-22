@@ -12,9 +12,9 @@ package Model;
 public class CelestialObject {
     public int starID;
     public String properName;
-    public float ra;
-    public float dec;
-    public float mag;
+    public double ra; //THIS IS (in theory) IN DEGREES
+    public double dec; //THIS IS (in thoery) IN DEGREES
+    public double mag;
 
     public CelestialObject() {
 

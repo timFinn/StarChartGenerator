@@ -8,7 +8,10 @@ import Model.CelestialObject;
 import Model.Messier;
 import Model.Planet;
 import Model.Star;
+import com.jogamp.nativewindow.util.Dimension;
+import com.jogamp.nativewindow.util.Rectangle;
 import com.jogamp.newt.Display;
+import com.jogamp.newt.MonitorDevice;
 import com.jogamp.newt.NewtFactory;
 import com.jogamp.newt.Screen;
 import com.jogamp.newt.event.KeyEvent;
@@ -26,6 +29,7 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.gl2.GLUT;
+
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import java.util.ArrayList;
@@ -41,7 +45,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     public static GLWindow glWindow;
     public static Animator animator;
     private GLUT glut = new GLUT(); //to use glut commands
-    private double sphereSize = 450; //FIXME this defines the size of our sphere  
+    private double sphereSize; // this defines the size of our sphere  
     private double modifier = 1; //FIXME this is so that things look right
     private double lat = 0; //FIXME
     private double longitude=0; //FIXME
@@ -50,7 +54,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     private ArrayList planetArray;
     private ArrayList messierArray;
     private ArrayList constellation = new ArrayList<>();
-    Iterator<Star> starIt;
+  //  Iterator<Star> starIt;
    
     /*TEST CODE HERE FIXME DELETEME
     */
@@ -65,23 +69,47 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         this.longitude = longitude;
         //finish ArrayList assignments here
         this.starArray = stars;
-        if(starArray.isEmpty()) {
-            System.out.println("Fuck everything");
-        }
         this.messierArray = messiers;
         this.planetArray=planets;
         //this.constellation.addAll(constellation);
-       // starIt = starArray.iterator();
-      //  System.out.println("iterator created");
        
         Display display = NewtFactory.createDisplay(null,true);
         Screen screen = NewtFactory.createScreen(display, 0);
+        screen.addReference(); //allows me to determine monitor size and adjust
+        int height = screen.getPrimaryMonitor().getViewport().getHeight();
+        int width = screen.getPrimaryMonitor().getViewport().getWidth();
+        int screenSize;
+        height= height*3/4;
+        width = width*3/4;
+        //SQUARES ASPECT
+        if(width>height) { //if normal monitor
+            screenSize = height;
+        } else { //if not normal monitor
+            screenSize = width;
+        }
+        //if(width>1000) { //any smaller and the universe looks UGLY
+            this.sphereSize = screenSize*3/2; //maybe I want width/2 here
+       // } else {
+       //     this.sphereSize = 1000;
+       // }
+            this.modifier = sphereSize/screenSize; //FIXME test function
+        //FIXME I need to change spheresize and etc. appropriately
+        //this.sphereSize;
+        
         GLProfile glProfile = GLProfile.get(GLProfile.GL2);
         GLCapabilities glCapabilities = new GLCapabilities(glProfile);
         glWindow = GLWindow.create(screen, glCapabilities);
+        //int width;// = screen.getViewport().getWidth();
+       //glWindow.setMaximized(true, true);
+       // width = glWindow.getBounds().getWidth();
+                
+        //int height;// = screen.getViewport().getHeight();
+       // height = glWindow.getBounds().getHeight();
+        
+        System.out.println(width+", "+height);
        
         //set beginning parameters for screen
-        glWindow.setSize(1000, 1000); //placeholder for future size FIXME
+        glWindow.setSize(screenSize, screenSize); //placeholder for future size FIXME
         glWindow.setPosition(200, 20); //placeholder, recommend middle of screen FIXME
         glWindow.setUndecorated(false); //don't need min/max/etc
         glWindow.setTitle("View from ("+this.lat+" ,"+this.longitude+")"); //Need to fix this to say where you're looking from FIXME
@@ -90,23 +118,20 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         glWindow.confinePointer(false); //won't trap mouse cursor
         glWindow.setContextCreationFlags(GLContext.CTX_OPTION_DEBUG); //Don't know if needed
         glWindow.setVisible(true); //allows window to be seen.
+        screen.removeReference(); //because I wanted to create the monitor size
        
-        //JOGLtests PLACEHOLDER = new JOGLtests(1);
         //listeners so you can resize screen, etc.
         glWindow.addGLEventListener(this);
         glWindow.addKeyListener(this);
         glWindow.addMouseListener(this);
-    //    glWindow.display();
-        //TEST BLOCK FOR THINGS DELETEME
+        //TEST BLOCK NORMALLY THIS IS NOT COMMENTED OUT
+        //glWindow.display();
+        
+        //TEST BLOCK FOR THINGS DELETEME FIXME
         animator = new Animator(glWindow);
         animator.start();
     }
-    /**
-     * @param args the command line arguments
-     *
-     */
    
-    //public static void main(String[] args) {
     public JOGLtests(){
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         //FIXME test data import
@@ -148,19 +173,17 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     public void init(GLAutoDrawable drawable) {
         System.out.println("begin to draw"); //test line REMOVE ME
         GL2 gl2 = drawable.getGL().getGL2();
-   //     gl2.glMatrixMode(GL2.GL_MODELVIEW);
-        gl2.glViewport(0, 0, 1000, 1000);  //FIX ME FUCK FUCK
+        
         gl2.glMatrixMode(GL2.GL_PROJECTION);
         gl2.glLoadIdentity();
         //may need to fix this
-        gl2.glOrtho(-500, 500, -500, 500, 0, 1000); //FIXME FUCK FUCK
+        double temp = this.sphereSize+50; //create viewspace
+        gl2.glOrtho(-temp, temp, -temp, temp, 0, temp*2); //FIXME define view of stars
         gl2.glMatrixMode(GL2.GL_MODELVIEW);
         
      //TEST CODE TO SEE UNIVERSE FIXME
-     //   gl2.glTranslated(0,0,-this.sphereSize);
-       
-        //gl2.glViewport(0, 0, 1000, 1000); //make sure same as setSize FIXME
-        //this.display;
+    //    gl2.glTranslated(0,0,-this.sphereSize);
+        //FIXME this is where rotations will go to define viewerspace
        
     }
     @Override
@@ -168,7 +191,6 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         System.out.println("Get rid of model to save memory!"); //test line REMOVE ME
         //retrieve elements to remove them
         GL2 gl2 = drawable.getGL().getGL2(); //lets me use gl commands
-       
         //Currently I'm done when I dispose so I exit, can remove this from final
         System.exit(0);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -186,58 +208,8 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         gl2.glPushMatrix();
         //rotation here?
       //  gl2.glTranslated(0, 0, 300);
-        
-    //    gl2.glPushMatrix();
-    //    this.drawSphere(0,0,1,drawable);
-    //    this.drawSphere(0, 0.785398, 6, drawable);
-        //this.drawSphere(0, 0, 1, drawable);
-    //    gl2.glPopMatrix();
-        //  gl2.glClearColor(1, 1, 1, 1);
-      //  gl2.glClear(GL.GL_COLOR_BUFFER_BIT);
-        //draw stars here FIXME
-   //     gl2.glPushMatrix();
-   //     this.drawSphere(0, 0.785398, 5, drawable);
-   //     gl2.glPopMatrix();
-        Iterator<Star> starIt = starArray.iterator();
-    //    Star sun =starIt.next(); //pulls sun off the list   //FIXME
-        
-       
-        while(starIt.hasNext())
-        {
-            Star currentStar = starIt.next();
-        // System.out.println("do I have a star?");
-        /*}
-        for (Star currentStar : this.starArray) {  //FIXME This breaks EVERYTHING*/
-            gl2.glPushMatrix(); //keeps origin
-        //    System.out.println("am I in star?");
-            double ra = this.convertHoursToRadians(currentStar.rightAscension); //converts
-            double rd = Math.toRadians(currentStar.declination); //FIXME possibly need to convert for radian
-      /*      if((ra>=Math.PI/2)&&(ra<=3*Math.PI/2)) { //if on opposite side of earth convert rd
-                if(rd>0) {
-                    rd+= Math.PI; //add pi to put it on the other side of the planet? 
-                } else {
-                    rd-= Math.PI; //subtract pi
-                }
-                
-            }
-            */
-          //  System.out.println(rd);
-            double mag = -currentStar.magnitude+7; //FIXME to make it relative
-            String name = currentStar.properName;
-            gl2.glColor3d(0.678431, 0.847059, 0.901961); //set color for stellar bodies (LIGHTBLUE)
-            if(currentStar.starID==0) { //if the sun
-                gl2.glColor3d(1, 0.843137, 0); //set color for the Sun (GOLD)
-            }
-            this.drawSphere(ra, rd, mag, drawable);
-            //if the star is named, do the name draw part
-        /*    if(!name.isEmpty()) {
-                this.printName(name, drawable);
-            }*/
-            gl2.glPopMatrix(); //reverts to origin
-        }
-  /*      for (Messier currentMess : messierArray) {
-            //stuff goes here
-        }*/
+        this.drawStars(drawable);
+        this.drawMessiers(drawable);
   /*      for (Planet currentPlanet: planetArray) {
             //stuff goes here
         }*/
@@ -268,6 +240,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         //FIXME currently does not work as intended. CONFIRMED BROKEN
+        //appears to run with everything commented out.
         System.out.println("reshape");
         GL2 gl2 = drawable.getGL().getGL2(); //allows gl commands
         /**
@@ -344,25 +317,32 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
 
         //draw
         gl2.glTranslated(x, y, -z); //change to set location
-        glut.glutSolidSphere(magnitude*this.modifier, 16, 16); //FIXME
+        glut.glutSolidSphere(magnitude, 16, 16); //FIXME
    //     System.out.println("sphere should draw!"); //test line REMOVE ME
         //assension is time
     }
     //does rotation based on latitude and longitude
-    private void printName(String name, GLAutoDrawable drawable) {
-        System.out.println("I'm supposed to draw a name here!");
+    private void printName(String name, double magnitude, GLAutoDrawable drawable) {
+    //    System.out.println("I'm supposed to draw a name here!");
         GL2 gl2 = drawable.getGL().getGL2(); //allows gl commands
        
            //ROTATE HERE IF there is a name FIXME
         //gl2.glRotated(angle, xline, yline, zline);//FIXME to correct rotation for viewer
-        gl2.glTranslated(0, -this.sphereSize-100, 0); //FIX ME PLACEHOLDER CALCULATION FOR DRAWING TEXT ON SCREEN
-        gl2.glScaled(5, 5, 0); //FIX ME placeholder calculation
+        //FIXME I need this to scale with sphere size.
+        gl2.glTranslated(0, -magnitude-20*this.modifier, 0); //FIX ME PLACEHOLDER CALCULATION FOR DRAWING TEXT ON SCREEN
+        gl2.glScaled(0.8*this.modifier, 0.8*this.modifier, 0); //FIX ME placeholder calculation
         //FIXME Name alignment code goes here! Push this into a pretty function
         gl2.glRasterPos3d(0, 0, 0); //FIXMETEST, confirms it is in the right spot
+        char[] temp = name.toCharArray();
+        int length = name.length();
+        for(int i = 0; i < length; i++) {
+            glut.glutBitmapCharacter(GLUT.BITMAP_9_BY_15, temp[i]);
+        }
+        /*FIXME DELETEME this was a test block
         glut.glutBitmapCharacter(GLUT.BITMAP_9_BY_15, 'T');
         glut.glutBitmapCharacter(GLUT.BITMAP_9_BY_15, 'E');
         glut.glutBitmapCharacter(GLUT.BITMAP_9_BY_15, 'S');
-        glut.glutBitmapCharacter(GLUT.BITMAP_9_BY_15, 'T');
+        glut.glutBitmapCharacter(GLUT.BITMAP_9_BY_15, 'T');*/
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     //helper function to convert RA to radian degrees.
@@ -371,5 +351,60 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         converted = converted*Math.PI/12;
         return converted;
     }
-   
+    private void drawStars(GLAutoDrawable drawable) {
+        GL2 gl2 = drawable.getGL().getGL2();
+
+        Iterator<Star> starIt = this.starArray.iterator();
+        //    Star sun =starIt.next(); //pulls sun off the list   //FIXME
+        while (starIt.hasNext()) {
+            Star currentStar = starIt.next();
+            // System.out.println("do I have a star?");
+            gl2.glPushMatrix(); //keeps origin
+            double ra = this.convertHoursToRadians(currentStar.rightAscension); //converts
+            double rd = Math.toRadians(currentStar.declination); //FIXME possibly need to convert for radian
+            /*      
+             hopefully I don't need this code, but leaving in for now.
+             if((ra>=Math.PI/2)&&(ra<=3*Math.PI/2)) { //if on opposite side of earth convert rd
+             if(rd>0) {
+             rd+= Math.PI; //add pi to put it on the other side of the planet?
+             } else {
+             rd-= Math.PI; //subtract pi
+             }
+             }
+             */
+            //  System.out.println(rd);
+            double mag = (-currentStar.magnitude + 7) * this.modifier; //FIXME to make it relative
+            String name = currentStar.properName;
+            gl2.glColor3d(0.678431, 0.847059, 0.901961); //set color for stellar bodies (LIGHTBLUE)
+            if (currentStar.starID == 0) { //if the sun
+                gl2.glColor3d(1, 0.843137, 0); //set color for the Sun (GOLD)
+            }
+            this.drawSphere(ra, rd, mag, drawable);
+            //if the star is named, do the name draw part
+            if (name.length() > 1) { //If name is defined
+                //    System.out.println(name.length());
+                //    System.out.println("I have a name, it's "+name);
+                gl2.glColor3d(1, 1, 1);
+                this.printName(name, mag, drawable);
+            }
+            gl2.glPopMatrix(); //reverts to origin
+        }
+    }
+    private void drawMessiers(GLAutoDrawable drawable) {
+        GL2 gl2 = drawable.getGL().getGL2();
+        
+        Iterator<Messier> mesIt = this.messierArray.iterator();
+        //    Star sun =starIt.next(); //pulls sun off the list   //FIXME
+        while (mesIt.hasNext()) {
+            Messier currentMess = mesIt.next();
+            gl2.glPushMatrix();
+            double ra = this.convertHoursToRadians(currentMess.ra);
+            double rd = Math.toRadians(currentMess.dec);
+            String name; //PLACEHOLDER FOR NAMES FOR MESSY OBJECTS
+            gl2.glColor3d(1,0,1);
+            this.drawSphere(ra, rd, 20, drawable);
+            
+            gl2.glPopMatrix();
+        }
+    }
 }
