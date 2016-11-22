@@ -157,7 +157,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         gl2.glMatrixMode(GL2.GL_MODELVIEW);
         
      //TEST CODE TO SEE UNIVERSE FIXME
-        gl2.glTranslated(0,0,-this.sphereSize);
+     //   gl2.glTranslated(0,0,-this.sphereSize);
        
         //gl2.glViewport(0, 0, 1000, 1000); //make sure same as setSize FIXME
         //this.display;
@@ -200,6 +200,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
    //     gl2.glPopMatrix();
         Iterator<Star> starIt = starArray.iterator();
     //    Star sun =starIt.next(); //pulls sun off the list   //FIXME
+        
        
         while(starIt.hasNext())
         {
@@ -222,7 +223,11 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
             */
           //  System.out.println(rd);
             double mag = -currentStar.magnitude+7; //FIXME to make it relative
-           // String name = currentStar.properName;
+            String name = currentStar.properName;
+            gl2.glColor3d(0.678431, 0.847059, 0.901961); //set color for stellar bodies (LIGHTBLUE)
+            if(currentStar.starID==0) { //if the sun
+                gl2.glColor3d(1, 0.843137, 0); //set color for the Sun (GOLD)
+            }
             this.drawSphere(ra, rd, mag, drawable);
             //if the star is named, do the name draw part
         /*    if(!name.isEmpty()) {
@@ -338,7 +343,6 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
      //   System.out.println(x+", "+y+", "+z);
 
         //draw
-        gl2.glColor3d(0.678431, 0.847059, 0.901961); //set color for stellar bodies (LIGHTBLUE)
         gl2.glTranslated(x, y, -z); //change to set location
         glut.glutSolidSphere(magnitude*this.modifier, 16, 16); //FIXME
    //     System.out.println("sphere should draw!"); //test line REMOVE ME
