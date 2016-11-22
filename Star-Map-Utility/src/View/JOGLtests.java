@@ -53,8 +53,12 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     private ArrayList starArray;
     private ArrayList planetArray;
     private ArrayList messierArray;
-    private ArrayList constellation = new ArrayList<>();
-  //  Iterator<Star> starIt;
+    private ArrayList constellation= new ArrayList<>();
+  
+    //I may need these to play with glOrtho in reshape call.
+    private double xleft, xright;
+    private double ydown, yup;
+    private double znear, zfar;
    
     /*TEST CODE HERE FIXME DELETEME
     */
@@ -65,6 +69,22 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     //THIS IS THE "eventual" final destination for JOGLtests. Copypaste up here.
     public JOGLtests(ArrayList stars, ArrayList messiers, ArrayList planets, ArrayList constellation,
             double latitude, double longitude) {
+        /*FIXME THIS IS BOGUS DATA TO MAKE CONSTELLATIONS TEST*/
+        CelestialObject foo1 = new CelestialObject();
+        CelestialObject foo2 = new CelestialObject();
+        
+        CelestialObject foo3 = new CelestialObject();
+        CelestialObject foo4 = new CelestialObject();
+        foo1.dec=0; foo1.ra = 0;
+        foo2.dec=89; foo2.ra = Math.toDegrees(this.convertHoursToRadians(2.52974312));
+        foo3.dec=29.09 ; foo3.ra = Math.toDegrees(this.convertHoursToRadians(0.13976888));
+        foo4.dec=59.1502184; foo4.ra = Math.toDegrees(this.convertHoursToRadians(0.15280269));
+        this.constellation.add(foo1);
+        this.constellation.add(foo2);
+        this.constellation.add(foo3);
+        this.constellation.add(foo4);
+        /*EVERYTHING ABOVE NEEDS TO GO!*/
+        
         this.lat=latitude;
         this.longitude = longitude;
         //finish ArrayList assignments here
@@ -125,11 +145,11 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         glWindow.addKeyListener(this);
         glWindow.addMouseListener(this);
         //TEST BLOCK NORMALLY THIS IS NOT COMMENTED OUT
-        //glWindow.display();
+        glWindow.display();
         
         //TEST BLOCK FOR THINGS DELETEME FIXME
-        animator = new Animator(glWindow);
-        animator.start();
+       // animator = new Animator(glWindow);
+       // animator.start();
     }
    
     public JOGLtests(){
@@ -178,11 +198,17 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         gl2.glLoadIdentity();
         //may need to fix this
         double temp = this.sphereSize+50; //create viewspace
-        gl2.glOrtho(-temp, temp, -temp, temp, 0, temp*2); //FIXME define view of stars
+        this.xleft=-temp;
+        this.xright=temp;
+        this.ydown=-temp;
+        this.yup=temp;
+        this.znear=0;
+        this.zfar=temp*2;
+        gl2.glOrtho(xleft, xright, ydown, yup, znear, zfar); //FIXME define view of stars
         gl2.glMatrixMode(GL2.GL_MODELVIEW);
         
      //TEST CODE TO SEE UNIVERSE FIXME
-    //    gl2.glTranslated(0,0,-this.sphereSize);
+      //  gl2.glTranslated(0,0,-this.sphereSize);
         //FIXME this is where rotations will go to define viewerspace
        
     }
@@ -209,7 +235,9 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         //rotation here?
       //  gl2.glTranslated(0, 0, 300);
         this.drawStars(drawable);
+        this.drawConstellations(drawable);
         this.drawMessiers(drawable);
+        //this.drawPlanets(drawable);
   /*      for (Planet currentPlanet: planetArray) {
             //stuff goes here
         }*/
@@ -231,7 +259,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         //draw constellations here FIXME
       //  this.drawSphere(0, 0.785398, 10, drawable);
         gl2.glPopMatrix(); //undo rotation here?
-        gl2.glRotated(5, 0, 1, 0);
+        gl2.glRotated(15, 0, 1, 0);
         
     
     gl2.glFlush(); //ensure everything gets drawn?
@@ -244,16 +272,36 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         System.out.println("reshape");
         GL2 gl2 = drawable.getGL().getGL2(); //allows gl commands
         /**
-         * Just the glViewport for this sample, normally here you update your
-         * projection matrix.
+         * Viewport appears to resolve itself in glwindows.
          */
-  /*      gl2.glViewport(x, y, width, height);
-        gl2.glMatrixMode(GL2.GL_PROJECTION);
+        
+       /*
+        int view = width;
+        if(width>height) { //if you scroll right, expand down
+            this.reshape(drawable, x, y, view, view);
+        } else if (height>width) {
+            view = height;  //if you scroll down, expand right
+            this.reshape(drawable, x, y, view, view);
+        } else { //if expansion has occurred
+            gl2.glViewport(x, y, view, view); //fix viewport, probably don't need this
+        */
+            //then redefine sphere area.
+    /*    gl2.glViewport(x, y, width, height);
+        this.xright=this.xleft+width;
+        this.ydown=this.yup-height;
+            gl2.glMatrixMode(GL2.GL_PROJECTION);
+            gl2.glLoadIdentity();
+            //may need to fix this
+            //double temp = this.sphereSize + 50; //create viewspace
+            gl2.glOrtho(xleft, xright, ydown, yup, znear, zfar); //FIXME define view of stars
+            gl2.glMatrixMode(GL2.GL_MODELVIEW);
+       */     
+       /* gl2.glMatrixMode(GL2.GL_PROJECTION);
         gl2.glLoadIdentity();
         //may need to fix this
         //gl2.glOrtho(x, width, y, height, 1, 500); //FIXME
         gl2.glMatrixMode(GL2.GL_MODELVIEW);
-   */    
+       */
        
     }
     @Override
@@ -297,6 +345,38 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     }
     @Override
     public void mouseWheelMoved(MouseEvent e) {
+       // System.out.println("mousewheel!"+e.getClickCount());
+        
+        GL2 gl = glWindow.getGL().getGL2(); //this may not work
+        //gl.glRotated(60, 0, 1, 0); //FIXME this doesn't work
+        glWindow.display();
+        //
+        /* String message;
+       int notches = e.getWheelRotation();
+       if (notches < 0) {
+           message = "Mouse wheel moved UP "
+                        + -notches + " notch(es)" + newline;
+       } else {
+           message = "Mouse wheel moved DOWN "
+                        + notches + " notch(es)" + newline;
+       }
+       if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
+           message += "    Scroll type: WHEEL_UNIT_SCROLL" + newline;
+           message += "    Scroll amount: " + e.getScrollAmount()
+                   + " unit increments per notch" + newline;
+           message += "    Units to scroll: " + e.getUnitsToScroll()
+                   + " unit increments" + newline;
+           message += "    Vertical unit increment: "
+               + scrollPane.getVerticalScrollBar().getUnitIncrement(1)
+               + " pixels" + newline;
+       } else { //scroll type == MouseWheelEvent.WHEEL_BLOCK_SCROLL
+           message += "    Scroll type: WHEEL_BLOCK_SCROLL" + newline;
+           message += "    Vertical block increment: "
+               + scrollPane.getVerticalScrollBar().getBlockIncrement(1)
+               + " pixels" + newline;
+       }
+       //saySomething(message, e);
+        */
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     /*
@@ -392,19 +472,87 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     }
     private void drawMessiers(GLAutoDrawable drawable) {
         GL2 gl2 = drawable.getGL().getGL2();
-        
+        int PLACEHOLDER = 20; //FIXME DELETEME placeholder value
         Iterator<Messier> mesIt = this.messierArray.iterator();
-        //    Star sun =starIt.next(); //pulls sun off the list   //FIXME
         while (mesIt.hasNext()) {
             Messier currentMess = mesIt.next();
             gl2.glPushMatrix();
-            double ra = this.convertHoursToRadians(currentMess.ra);
+            double ra = Math.toRadians(currentMess.ra);
             double rd = Math.toRadians(currentMess.dec);
-            String name; //PLACEHOLDER FOR NAMES FOR MESSY OBJECTS
+            String name = "M"+currentMess.newNos; //PLACEHOLDER FOR NAMES FOR MESSY OBJECTS
             gl2.glColor3d(1,0,1);
-            this.drawSphere(ra, rd, 20, drawable);
-            
+            this.drawSphere(ra, rd, PLACEHOLDER, drawable);
+            this.printName(name, PLACEHOLDER, drawable);
             gl2.glPopMatrix();
         }
+    }
+    private void drawPlanets(GLAutoDrawable drawable) {
+        GL2 gl2 = drawable.getGL().getGL2();
+        int PLACEHOLDER =20; //FIXME DELETEME placeholder value
+        Iterator<Planet> planIt = this.planetArray.iterator();
+        while (planIt.hasNext()) {
+            Planet currentPlan = planIt.next();
+            gl2.glPushMatrix();
+            double ra = Math.toRadians(currentPlan.ra);
+            double rd = Math.toRadians(currentPlan.dec);
+            String name = currentPlan.properName; //PLACEHOLDER FOR NAMES FOR MESSY OBJECTS
+            gl2.glColor3d(0,1,1);
+            this.drawSphere(ra, rd, PLACEHOLDER, drawable);
+            this.printName(name, PLACEHOLDER, drawable);
+            gl2.glPopMatrix();
+        }
+    }
+    private void drawMoon(GLAutoDrawable drawable) {
+        GL2 gl2 = drawable.getGL().getGL2();
+        //DRAW MOON HERE
+    }
+    
+    private void drawConstellations(GLAutoDrawable drawable) {
+        //FIXME doesn't work quite perfect yet.
+        GL2 gl2 = drawable.getGL().getGL2();
+
+        //CelestialObject startOfLine = new CelestialObject();
+        //startOfLine.dec = 361; //bogus value to start search
+        Iterator<CelestialObject> conIt = this.constellation.iterator();
+        gl2.glColor3d(1, 1, 1); //constellations are WHITE
+        gl2.glLineWidth((float)this.modifier);
+        while (conIt.hasNext()) {
+            /*if (startOfLine.dec == 361) {
+                            System.out.println("I make it to the first call");
+
+                startOfLine = conIt.next(); //begin line definition
+            } else {
+                            System.out.println("I make it to the second call");
+*/
+            CelestialObject startOfLine = conIt.next();
+                CelestialObject endOfLine = conIt.next();
+                //finds x,y,z position for start
+                double ra1 = Math.toRadians(startOfLine.ra);
+                double rd1 = Math.toRadians(startOfLine.dec);
+                double x1, y1, z1;
+                //FIXME do I need to convert RA into degree/radian/etc.
+                x1 = this.sphereSize * cos(rd1) * cos(ra1);
+                z1 = this.sphereSize * cos(rd1) * sin(ra1);
+                y1 = this.sphereSize * sin(rd1);
+
+                //finds x,y,z position for end
+                double ra2 = Math.toRadians(endOfLine.ra);
+                double rd2 = Math.toRadians(endOfLine.dec);
+                double x2, y2, z2;
+                //FIXME do I need to convert RA into degree/radian/etc.
+                x2 = this.sphereSize * cos(rd2) * cos(ra2);
+                z2 = this.sphereSize * cos(rd2) * sin(ra2);
+                y2 = this.sphereSize * sin(rd2);
+                //draw line, flush start of line
+                gl2.glBegin(GL2.GL_LINES);
+                {
+                    System.out.println("I'm drawing lines");
+                    gl2.glVertex3d(x1, y1, z1);
+                    gl2.glVertex3d(x2, y2, z2);
+                }
+                gl2.glEnd();
+                //startOfLine.dec = 361; //resets for next 2 coordinates
+           // }
+        }        
     }
 }
