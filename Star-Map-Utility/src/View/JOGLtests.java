@@ -60,6 +60,9 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     private double ydown, yup;
     private double znear, zfar;
    
+    private boolean drawcnst, drawstr, drawmss, drawplnt, rotate;
+    private int sphereSlice;
+    
     /*TEST CODE HERE FIXME DELETEME
     */
     Star testStar1 = new Star(0,"TEST",0,0.785398,6);
@@ -85,6 +88,12 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         this.constellation.add(foo4);
         /*EVERYTHING ABOVE NEEDS TO GO!*/
         
+        this.sphereSlice = 16; //initial slice calculation
+        this.drawcnst = false; //draw no constellations
+        this.drawstr = true; //draw stars
+        this.drawmss = true; //draw messiers
+        this.drawplnt = false; //don't have planets to draw yet FIXME
+        this.rotate = false; //initialize test var
         this.lat=latitude;
         this.longitude = longitude;
         //finish ArrayList assignments here
@@ -231,12 +240,25 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         GL2 gl2 = drawable.getGL().getGL2(); //gives me ability to use gl commands
         gl2.glClearColor(0,0,0,1);
         gl2.glClear(GL.GL_COLOR_BUFFER_BIT);
-        gl2.glPushMatrix();
+        if(this.rotate) {  //to spin globe
+            gl2.glRotated(15, 0, 1, 0);
+            this.rotate = false;
+        }
+        gl2.glPushMatrix(); //preserve current manipulations
         //rotation here?
       //  gl2.glTranslated(0, 0, 300);
+        if(this.drawstr) { //if drawing stars
         this.drawStars(drawable);
-        this.drawConstellations(drawable);
+        }
+        if(this.drawcnst) { //if drawing constellations
+            this.drawConstellations(drawable);
+        }
+        if(this.drawmss) { //if drawing messier
         this.drawMessiers(drawable);
+        }
+        if(this.drawplnt) { //if drawing planets
+            
+        }
         //this.drawPlanets(drawable);
   /*      for (Planet currentPlanet: planetArray) {
             //stuff goes here
@@ -259,7 +281,6 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         //draw constellations here FIXME
       //  this.drawSphere(0, 0.785398, 10, drawable);
         gl2.glPopMatrix(); //undo rotation here?
-        gl2.glRotated(15, 0, 1, 0);
         
     
     gl2.glFlush(); //ensure everything gets drawn?
@@ -306,11 +327,38 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     }
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) { //allows for escape, do I need this?
-        //    animator.remove(glWindow);
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+
+//allows for escape, do I need this?
+            //    animator.remove(glWindow);
             glWindow.destroy();
+
+        } else if (e.getKeyCode() == KeyEvent.VK_C) { //draw or not constellations
+            this.drawcnst = !drawcnst;
+        } else if (e.getKeyCode() == KeyEvent.VK_M) { //draw or not Messier
+            this.drawmss = !drawmss;
+        } else if (e.getKeyCode() == KeyEvent.VK_S) { //draw or not stars
+            this.drawstr = !drawstr;
+        } else if (e.getKeyCode() == KeyEvent.VK_P) {
+            this.drawplnt = !drawplnt;
+        } else if (e.getKeyCode() == KeyEvent.VK_T) { //image process for stars faster
+            if (this.sphereSlice <= 2) { //if already as small as can be, do nothing
+                this.sphereSlice = 2;
+            } else {
+                this.sphereSlice = sphereSlice / 2; //divide by 2
+            }
+        } else if (e.getKeyCode() == KeyEvent.VK_Y) { //image process for stars slower
+            if (this.sphereSlice >= 64) { //this is absurdly high, do nothing
+                this.sphereSlice = 64;
+            } else {
+                this.sphereSlice = sphereSlice * 2; //mulitply by 2
+            }
+        } else if (e.getKeyCode() == KeyEvent.VK_R) { //rotate
+            this.rotate = true;
         }
+        glWindow.display(); //redraw?
     }
+    
     @Override
     public void keyReleased(KeyEvent e) {
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -397,7 +445,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
 
         //draw
         gl2.glTranslated(x, y, -z); //change to set location
-        glut.glutSolidSphere(magnitude, 16, 16); //FIXME
+        glut.glutSolidSphere(magnitude, this.sphereSlice, this.sphereSlice); //FIXME
    //     System.out.println("sphere should draw!"); //test line REMOVE ME
         //assension is time
     }
