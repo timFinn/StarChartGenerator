@@ -8,6 +8,7 @@ import Model.CelestialObject;
 import Model.Messier;
 import Model.Planet;
 import Model.Star;
+import Model.Constellation;
 import com.jogamp.nativewindow.util.Dimension;
 import com.jogamp.nativewindow.util.Rectangle;
 import com.jogamp.newt.Display;
@@ -87,6 +88,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         this.constellation.add(foo3);
         this.constellation.add(foo4);
         /*EVERYTHING ABOVE NEEDS TO GO!*/
+       this.constellation =constellation;
         
         this.sphereSlice = 16; //initial slice calculation
         this.drawcnst = false; //draw no constellations
@@ -217,7 +219,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         gl2.glMatrixMode(GL2.GL_MODELVIEW);
         
      //TEST CODE TO SEE UNIVERSE FIXME
-      //  gl2.glTranslated(0,0,-this.sphereSize);
+       gl2.glTranslated(0,0,-this.sphereSize);
         //FIXME this is where rotations will go to define viewerspace
        
     }
@@ -348,8 +350,8 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
                 this.sphereSlice = sphereSlice / 2; //divide by 2
             }
         } else if (e.getKeyCode() == KeyEvent.VK_Y) { //image process for stars slower
-            if (this.sphereSlice >= 64) { //this is absurdly high, do nothing
-                this.sphereSlice = 64;
+            if (this.sphereSlice >= 32) { //this is absurdly high, do nothing
+                this.sphereSlice = 32;
             } else {
                 this.sphereSlice = sphereSlice * 2; //mulitply by 2
             }
@@ -558,10 +560,11 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     private void drawConstellations(GLAutoDrawable drawable) {
         //FIXME doesn't work quite perfect yet.
         GL2 gl2 = drawable.getGL().getGL2();
-
+        Iterator<Constellation> groupIt = this.constellation.iterator();
+        Constellation group = (Constellation)this.constellation.get(0);
         //CelestialObject startOfLine = new CelestialObject();
         //startOfLine.dec = 361; //bogus value to start search
-        Iterator<CelestialObject> conIt = this.constellation.iterator();
+        Iterator<CelestialObject> conIt = group.constellationMembers.iterator();
         gl2.glColor3d(1, 1, 1); //constellations are WHITE
         gl2.glLineWidth((float)this.modifier);
         while (conIt.hasNext()) {

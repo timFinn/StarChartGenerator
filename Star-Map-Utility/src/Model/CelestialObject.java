@@ -19,4 +19,9 @@ public class CelestialObject {
     public CelestialObject() {
 
     }
+    
+    public CelestialObject(double ra, double dec) {
+        this.ra = ra;
+        this.dec = dec;
+    }
 }

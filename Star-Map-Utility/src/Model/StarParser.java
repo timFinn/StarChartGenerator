@@ -43,19 +43,19 @@ public class StarParser {
         this.celestialObjectArray = celestialObjectArray;
         
         if (celestialObjectType.equals("Planet")) {
-            //csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\Planets.csv";
+            csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\Planets.csv";
             //csvFile = "/Users/timothy/Google Drive/Fall 2016/CS 499/Production/cs499/Star-Map-Utility/src/Model/Planets.csv";
-            csvFile = "E:\\Users\\Dave\\Documents\\NetBeansProjects\\cs499\\Star-Map-Utility\\src\\Model\\Planets.csv";
+            //csvFile = "E:\\Users\\Dave\\Documents\\NetBeansProjects\\cs499\\Star-Map-Utility\\src\\Model\\Planets.csv";
         }
         else if (celestialObjectType.equals("Star")) {
-            //csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\6MagStars.csv";
+            csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\6MagStars.csv";
             //csvFile = "/Users/timothy/Google Drive/Fall 2016/CS 499/Production/cs499/Star-Map-Utility/src/Model/6MagStars.csv";
-            csvFile = "E:\\Users\\Dave\\Documents\\NetBeansProjects\\cs499\\Star-Map-Utility\\src\\Model\\6MagStars.csv";
+            //csvFile = "E:\\Users\\Dave\\Documents\\NetBeansProjects\\cs499\\Star-Map-Utility\\src\\Model\\6MagStars.csv";
         }
         else if (celestialObjectType.equals("Messier")) {
-            //csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\Messier.csv";
+            csvFile = "D:\\Evan Documents\\Senior Project\\cs499\\Star-Map-Utility\\src\\Model\\Messier.csv";
             //csvFile = "/Users/timothy/Google Drive/Fall 2016/CS 499/Production/cs499/Star-Map-Utility/src/Model/Messier.csv";
-            csvFile = "E:\\Users\\Dave\\Documents\\NetBeansProjects\\cs499\\Star-Map-Utility\\src\\Model\\Messier.csv";
+            //csvFile = "E:\\Users\\Dave\\Documents\\NetBeansProjects\\cs499\\Star-Map-Utility\\src\\Model\\Messier.csv";
         }
         
         try {

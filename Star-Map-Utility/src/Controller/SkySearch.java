@@ -104,16 +104,48 @@ public class SkySearch {
     
   public void generateChart()
     {
+        // Create Constellations
+        ArrayList constellations = this.generateConstellations();
         calcSpaceTimeWindow();
         //calcPlanets();
         this.createLists();
         //TEST FILE DELETE ME FIXME
-             ArrayList constellation = new ArrayList<>();
-        JOGLtests jt = new JOGLtests( this.starArray,this.messierArray, this.planetArray,  constellation,
+         //    ArrayList constellation = new ArrayList<>();
+        JOGLtests jt = new JOGLtests( this.starArray,this.messierArray, this.planetArray,  constellations,
             this.latitude,  this.longitude);
         /*
             relative lat and long are the origin for calculating the viewport
            
         */
+    }
+
+    private ArrayList<Constellation> generateConstellations()
+    {
+        ArrayList<Constellation> constellations = new ArrayList();
+        Constellation Cassiopeia = new Constellation("Cassiopeia");
+        CelestialObject tempObject;
+        
+        //first set of points
+        tempObject = new CelestialObject(2.3295, 59.09);
+        Cassiopeia.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(10.2656, 55.32);
+        Cassiopeia.constellationMembers.add(tempObject);
+        //second set of points
+        tempObject = new CelestialObject(10.2656, 55.32);
+        Cassiopeia.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(14.3719, 60.43);
+        Cassiopeia.constellationMembers.add(tempObject);
+        //third set of points
+        tempObject = new CelestialObject(14.3719, 60.43);
+        Cassiopeia.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(21.7479, 60.14);
+        Cassiopeia.constellationMembers.add(tempObject);
+        //fourth set of points
+        tempObject = new CelestialObject(21.7479, 60.14);
+        Cassiopeia.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(28.9977, 63.40);
+        Cassiopeia.constellationMembers.add(tempObject);
+        
+        return constellations;
     }
 }
