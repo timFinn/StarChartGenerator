@@ -61,7 +61,7 @@ public class Formulas {
         this.date = date;
         this.year = date.getYear();
         this.month = date.getMonthValue();
-        this.day = date.getDayOfYear();
+        this.day = date.getDayOfMonth();
         this.hour = time.getHour();
         this.minutes = time.getMinute();
         this.seconds = time.getSecond();
@@ -118,13 +118,13 @@ public class Formulas {
         julianDate = (367 * date.getYear()) 
                 - (Math.floor(7.0 * (date.getYear() + Math.floor((date.getMonthValue() + 9.0)/12.0))/4.0))
                 + (Math.floor(275.0 * date.getMonthValue()/9.0))
-                + date.getDayOfMonth() - 730531.5 + time.getHour()/24.0;
+                + date.getDayOfMonth() - 730531.5 + (time.getHour()/24.0);
     }
 
     public int cy()
     {
-        calYear = (int) (julianDate/36525);
-        return calYear;
+        int cy = (int) (julianDate/365.25);
+        return cy;
     }
 
     public double RADS()
@@ -139,39 +139,33 @@ public class Formulas {
 
     public double Mod2Pi(double X)
     {
-        //Given angle X in radians B=X/2π
+        //double X = X_in * RADS();
+        //Given angle X in radians 
         double b = X/(2 * Math.PI);
         double A = (2 * Math.PI) * (b - abs_floor(b));
 
         if(A < 0)
         {
             A = (2 * Math.PI) + A;
-        }
-        convertedAngle = A;
-        return convertedAngle;
-    }
-
-    public void convertRAdeg2HMS()
-    {
-        
-    }
-
-    public void convertDECdeg2DMS()
-    {
-        
+        }        
+        return A;
     }
 
     public double calcTrueAnomaly(double M, double e)
     {
+        //double e = ecc*RADS();
         double V;
         double E = M + e * Math.sin(M) * (1.0 + e * Math.cos(M));
-        double E_1 = E;
-
-        while(Math.abs(E - E_1) > (1.0*e - 12))
-        {
+        double E_1;
+        //double compare1;
+        //double compare2;
+            
+        do{
             E_1 = E;
-            E = E_1 - (E_1 - e * Math.sin(E_1) - M) / (1 - e * Math.cos(E_1));
-        }
+            E = (E_1 - (E_1 - e * Math.sin(E_1) - M)) / (1 - e * Math.cos(E_1));
+            //compare1 = Math.abs(E - E_1);
+            //compare2 = Math.pow(1.0, -12.0);
+        }while((Math.abs(E - E_1)) > (Math.pow(1.0, -12.0)));
 
         V = 2 * Math.atan(Math.sqrt((1+e) / (1-e)) * Math.tan(0.5 * E));
         if(V < 0)
@@ -189,29 +183,33 @@ public class Formulas {
     /*Given Year (year), Month (month with January = 1), Day (day) of the 
     month, Hour (hour) on a 24 hour clock, Minute (min), Second (sec). All 
     times must be measured from Greenwich mean time (TimeZone = 0).*/
-    public double calcMeanSidereal()
+    public double calcMeanSidereal(LocalDate date)
     {
-        if(month <= 2) 
-            year--;
-        // Adjust month and year if needed
-            month = month + 12;
-            double a = floor(year / 100.0);
-            double b = 2 - a + floor(a/4);
-            double c = floor(365.25 * year);
-            double d = floor(30.6001 * (month + 1));
-            // Get days since J2000.0
-            double jd = b + c + d - 730550.5 + day + (hour + minutes/60 + seconds/3600) / 24; 
-            // Get Julian centuries since J2000.0
-            double jt = jd / 36525.0;
-            // Calculate initial Mean Sidereal Time (greenwichSidereal)
-            double greenwichSidereal = 280.46061837 + (360.98564736629 * jd) + (0.000387933 * (jt*jt)) - ((jt*jt*jt) / 38710000) + observedLong; 
-            // Clip greenwichSidereal to range 0.0 to 360.0
-            if(greenwichSidereal > 0.0)
-                while(greenwichSidereal > 360.0) 
-                    greenwichSidereal -= 360.0;
-            else
-                while(greenwichSidereal < 0.0) 
-                    greenwichSidereal += 360.0;
+        int side_month = date.getMonthValue();
+        int side_year = date.getYear();
+        int side_day = date.getDayOfMonth();
+        if(date.getMonthValue() <= 2) // Adjust month and year if needed
+        {            
+            side_year--;        
+            side_month = side_month + 12;
+        }
+        double a = Math.floor(side_year / 100.0);
+        double b = 2 - a + Math.floor(a/4);
+        double c = Math.floor(365.25 * side_year);
+        double d = Math.floor(30.6001 * (side_month + 1));
+        // Get days since J2000.0
+        double jd = b + c + d - 730550.5 + side_day + (hour + minutes/60 + seconds/3600) / 24; 
+        // Get Julian centuries since J2000.0
+        double jt = jd / 36525.0;
+        // Calculate initial Mean Sidereal Time (greenwichSidereal)
+        greenwichSidereal = 280.46061837 + (360.98564736629 * jd) + (0.000387933 * (jt*jt)) - ((jt*jt*jt) / 38710000) + observedLong; 
+        // Clip greenwichSidereal to range 0.0 to 360.0
+        if(greenwichSidereal > 0.0)
+            while(greenwichSidereal > 360.0) 
+                greenwichSidereal -= 360.0;
+        else
+            while(greenwichSidereal < 0.0) 
+                greenwichSidereal += 360.0;        
         return greenwichSidereal;
     }       
 
@@ -357,8 +355,8 @@ public class Formulas {
         double yeq = y_g * Math.cos(ecl) - z_g * Math.sin(ecl);
         double zeq = y_g * Math.sin(ecl) + z_g * Math.cos(ecl);
         //calculate RA and dec from rectangular equatorial coordinates        
-        rightAsc = Mod2Pi(Math.atan2(yeq, xeq) * DEGS());
-        declination = Math.atan(zeq / (Math.sqrt(xeq*xeq + yeq*yeq)) * DEGS());
+        rightAsc = Mod2Pi(Math.atan2(yeq, xeq)) * DEGS();
+        declination = Math.atan(zeq / (Math.sqrt(xeq*xeq + yeq*yeq))) * DEGS();
         double distance = Math.sqrt((xeq*xeq) + (yeq*yeq) + (zeq*zeq));
     }   
     

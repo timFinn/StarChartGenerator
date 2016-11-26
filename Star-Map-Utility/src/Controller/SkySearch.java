@@ -72,17 +72,27 @@ public class SkySearch {
         return messierArray;
     }
     
-    public double calcSpaceTimeWindow()
+    public void calcSpaceTimeWindow()
     {        
-        double gms = frm.calcMeanSidereal();
-        System.out.println(gms);
-        return gms;
+        frm.calcMeanSidereal(obs.observedDate);
+        //frm.calcJulianDay();
+        frm.calcRelativeJD();        
     }
     
     public void calcPlanets()
     {
-        Iterator<Planet> planetIt = planetArray.iterator();
-        
+        Iterator<Planet> planetIt = planetArray.iterator();        
+        while(planetIt.hasNext())
+        {
+            planet = planetIt.next();                       
+            frm.calcRAdec(planet, earth);
+            planet.setRAdec(frm.getRA(), frm.getDec());
+        }
+    }
+    
+    public void calcPlanetaryElements()
+    {
+        Iterator<Planet> planetIt = planetArray.iterator();        
         while(planetIt.hasNext())
         {
             planet = planetIt.next();
@@ -91,11 +101,8 @@ public class SkySearch {
             double i = frm.calcPlaneInclination(planet.getiScal(), planet.getiProp());
             double p = frm.calcPerihelion(planet.getwScal(), planet.getwProp());
             double l = frm.calcLongAscNode(planet.getoScal(), planet.getoProp());
-            double m = frm.calcMeanLong(planet.getlScal(), planet.getlProp());            
-            
+            double m = frm.calcMeanLong(planet.getlScal(), planet.getlProp());                        
             planet.setElements(s, e, i, p, l, m);
-            frm.calcRAdec(planet, earth);
-            planet.setRAdec(frm.getRA(), frm.getDec());
         }
     }
     
@@ -104,14 +111,27 @@ public class SkySearch {
         earth = (Planet) planetArray.get(2);        
     }
     
+    public void calcEarth()
+    {
+        double s = frm.calcSemiAxis(earth.getaScal(), earth.getaProp());
+        double e = frm.calcEccentricity(earth.geteScal(), earth.geteProp());
+        double i = frm.calcPlaneInclination(earth.getiScal(), earth.getiProp());
+        double p = frm.calcPerihelion(earth.getwScal(), earth.getwProp());
+        double l = frm.calcLongAscNode(earth.getoScal(), earth.getoProp());
+        double m = frm.calcMeanLong(earth.getlScal(), earth.getlProp());            
+        earth.setElements(s, e, i, p, l, m);     
+    }
+    
     public void generateChart()
     {
         createLists();
         calcSpaceTimeWindow();
         
         findEarth();
+        //calcEarth();
+        calcPlanetaryElements();
         calcPlanets();
-        System.out.println("planets done");
+        System.out.println("planetary elements done");
         //drawshit
         /*
             relative lat and long are the origin for calculating the viewport
