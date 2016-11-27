@@ -219,7 +219,8 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         gl2.glMatrixMode(GL2.GL_MODELVIEW);
         
      //TEST CODE TO SEE UNIVERSE FIXME
-       gl2.glTranslated(0,0,-this.sphereSize);
+      // gl2.glTranslated(0,0,-this.sphereSize);
+      // gl2.glRotated(90-63,1,0,0);
         //FIXME this is where rotations will go to define viewerspace
        
     }
@@ -561,10 +562,12 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         //FIXME doesn't work quite perfect yet.
         GL2 gl2 = drawable.getGL().getGL2();
         Iterator<Constellation> groupIt = this.constellation.iterator();
-        Constellation group = (Constellation)this.constellation.get(0);
+        //Constellation group = (Constellation)this.constellation.get(0);
+        while(groupIt.hasNext()) {
+            Constellation currentConstellation = groupIt.next();
         //CelestialObject startOfLine = new CelestialObject();
         //startOfLine.dec = 361; //bogus value to start search
-        Iterator<CelestialObject> conIt = group.constellationMembers.iterator();
+        Iterator<CelestialObject> conIt = currentConstellation.constellationMembers.iterator();
         gl2.glColor3d(1, 1, 1); //constellations are WHITE
         gl2.glLineWidth((float)this.modifier);
         while (conIt.hasNext()) {
@@ -578,7 +581,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
             CelestialObject startOfLine = conIt.next();
                 CelestialObject endOfLine = conIt.next();
                 //finds x,y,z position for start
-                double ra1 = Math.toRadians(startOfLine.ra);
+                double ra1 = this.convertHoursToRadians(startOfLine.ra);
                 double rd1 = Math.toRadians(startOfLine.dec);
                 double x1, y1, z1;
                 //FIXME do I need to convert RA into degree/radian/etc.
@@ -587,7 +590,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
                 y1 = this.sphereSize * sin(rd1);
 
                 //finds x,y,z position for end
-                double ra2 = Math.toRadians(endOfLine.ra);
+                double ra2 = this.convertHoursToRadians(endOfLine.ra);
                 double rd2 = Math.toRadians(endOfLine.dec);
                 double x2, y2, z2;
                 //FIXME do I need to convert RA into degree/radian/etc.
@@ -605,5 +608,6 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
                 //startOfLine.dec = 361; //resets for next 2 coordinates
            // }
         }        
+        }
     }
 }
