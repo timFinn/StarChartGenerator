@@ -359,6 +359,8 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
             }
         } else if (e.getKeyCode() == KeyEvent.VK_R) { //rotate
             this.rotate = true;
+        } else if (e.getKeyCode() == KeyEvent.VK_Z) {
+            System.out.println("Put the call to the function to create the jpg here, Evan"); //FIX ME DELETE ME HEY RIGHT HERE, just by pressing z you can test.
         }
         glWindow.display(); //redraw?
     }
