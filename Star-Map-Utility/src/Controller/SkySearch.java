@@ -335,6 +335,147 @@ public class SkySearch {
         //add Scorpius to the arrayList
         constellations.add(Scorpius);
         
+        //Sagittarius constellation
+        Constellation Sagittarius = new Constellation("Sagittarius");
+        //first set of points
+        tempObject = new CelestialObject(19.1167, -27.40);
+        Sagittarius.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(18.9217, -26.18);
+        Sagittarius.constellationMembers.add(tempObject);
+        //second set of points
+        tempObject = new CelestialObject(18.4667, -25.26);
+        Sagittarius.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(18.35, -29.50);
+        Sagittarius.constellationMembers.add(tempObject);
+        //third set of points
+        tempObject = new CelestialObject(18.35, -29.50);
+        Sagittarius.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(18.4033, -34.23);
+        Sagittarius.constellationMembers.add(tempObject);
+        //4th set of points
+        tempObject = new CelestialObject(18.4033, -34.23);
+        Sagittarius.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(19.0433, -29.53);
+        Sagittarius.constellationMembers.add(tempObject);
+        //5th set of points
+        tempObject = new CelestialObject(18.35, -29.50);
+        Sagittarius.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(18.4033, -34.23);
+        Sagittarius.constellationMembers.add(tempObject);
+        //add Sagittarius to the arrayList
+        constellations.add(Sagittarius);
+        
+        //Aquarius constellation
+        Constellation Aquarius = new Constellation("Aquarius");
+        //first set of points
+        tempObject = new CelestialObject(21.5267, -5.35);
+        Aquarius.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(22.0967, -0.2);
+        Aquarius.constellationMembers.add(tempObject);
+        //add Aquarius to the arrayList
+        constellations.add(Aquarius);
+        
+        //Ursa Minor constellation
+        Constellation UrsaMinor  = new Constellation("Ursa Minor");
+        //first set of points
+        tempObject = new CelestialObject(14.845, 74.1);
+        UrsaMinor.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(15.345, 71.5);
+        UrsaMinor.constellationMembers.add(tempObject);
+        //add Ursa Minor  to the arrayList
+        constellations.add(UrsaMinor);
+        
+        //Ursa Major constellation
+        Constellation UrsaMajor  = new Constellation("Ursa Major");
+        //first set of points
+        tempObject = new CelestialObject(3.7917, 49.19);
+        UrsaMajor.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(13.3983, 54.58);
+        UrsaMajor.constellationMembers.add(tempObject);
+        //second set of points
+        tempObject = new CelestialObject(13.3983, 54.58);
+        UrsaMajor.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(12.9017, 55.58);
+        UrsaMajor.constellationMembers.add(tempObject);
+        //third set of points
+        tempObject = new CelestialObject(11.8983, 53.42);
+        UrsaMajor.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(11.03, 56.23);
+        UrsaMajor.constellationMembers.add(tempObject);
+        //add Ursa Major  to the arrayList
+        constellations.add(UrsaMajor);
+        
+        //Draco constellation
+        Constellation Draco  = new Constellation("Draco");
+        //first set of points
+        tempObject = new CelestialObject(17.5067, 52.19);
+        Draco.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(17.9433, 51.29);
+        Draco.constellationMembers.add(tempObject);
+        //add Draco  to the arrayList
+        constellations.add(Draco);
+        
+        //Andromeda constellation
+        Constellation Andromeda  = new Constellation("Andromeda");
+        //first set of points
+        tempObject = new CelestialObject(0.14, 29.05);
+        Andromeda.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(0.6567, 30.51);
+        Andromeda.constellationMembers.add(tempObject);
+        //second set of points
+        tempObject = new CelestialObject(0.6567, 30.51);
+        Andromeda.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(1.1617, 35.37);
+        Andromeda.constellationMembers.add(tempObject);
+        //3rd set of points
+        tempObject = new CelestialObject(1.1617, 35.37);
+        Andromeda.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(2.0667, 42.2);
+        Andromeda.constellationMembers.add(tempObject);
+        //add Andromeda  to the arrayList
+        constellations.add(Andromeda);
+        
+        //Pegasus constellation
+        Constellation Pegasus  = new Constellation("Pegasus");
+        //first set of points
+        tempObject = new CelestialObject(0.2217, 15.11);
+        Pegasus.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(0.14, 29.05);
+        Pegasus.constellationMembers.add(tempObject);
+        //add Pegasus  to the arrayList
+        constellations.add(Pegasus);
+        
+        //Perseus constellation
+        Constellation Perseus  = new Constellation("Perseus");
+        //first set of points
+        tempObject = new CelestialObject(3.0783, 53.3);
+        Perseus.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(3.405, 49.51);
+        Perseus.constellationMembers.add(tempObject);
+        //second set of points
+        tempObject = new CelestialObject(3.405, 49.51);
+        Perseus.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(3.415, 47.47);
+        Perseus.constellationMembers.add(tempObject);
+        //3rd set of points
+        tempObject = new CelestialObject(3.1367, 40.57);
+        Perseus.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(3.0867, 38.5);
+        Perseus.constellationMembers.add(tempObject);
+        //add Perseus  to the arrayList
+        constellations.add(Perseus);
+        
+        //Triangulum constellation
+        Constellation Triangulum  = new Constellation("Triangulum");
+        //first set of points
+        tempObject = new CelestialObject(1.885, 29.35);
+        Triangulum.constellationMembers.add(tempObject);
+        tempObject = new CelestialObject(2.1583, 34.59);
+        Triangulum.constellationMembers.add(tempObject);
+        //add Triangulum  to the arrayList
+        constellations.add(Triangulum);
+        
         return constellations;
     }
+
 }
