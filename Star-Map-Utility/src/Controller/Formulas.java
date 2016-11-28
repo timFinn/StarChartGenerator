@@ -213,11 +213,6 @@ public class Formulas {
         return greenwichSidereal;
     }       
 
-    public void calcMoonPhase()
-    {
-
-    }
-
     public void convertJD2CD()
     {
         int A;
@@ -257,11 +252,6 @@ public class Formulas {
             year = C - 4716;
         else
             year = C - 4715;                    
-    }
-
-    public void calcLunarLoc()
-    {
-
     }
 
     public double abs_floor(double b) 
@@ -368,5 +358,36 @@ public class Formulas {
     public double getDec()
     {
         return declination;
+    }    
+    
+    public Moon lunarCalc()
+    {
+        String phase;
+        double RA;
+        double dec;
+        Moon m;
+        
+        double tempYear = date.getYear() + (date.getDayOfYear()/365);        
+        int k = (int)((tempYear - 1900.0) * 12.3685);        
+        double T = k / 1236.85;        
+        double JD = 2415020.75933 + (29.53058868 * k) + (0.0001178 * Math.pow(T, 2)) - (0.000000155 * Math.pow(T, 3)) + (0.00033 * Math.sin(((166.56*RADS()) + ((132.87*RADS()) * T) - ((0.009173* RADS()) * Math.pow(T, 2)))));        
+        
+        // Math.ceil(k) to find next new moon
+        // Math.floor(k) to find previous new moon
+        // .25 .5 .75 increments to find quarter full phases
+        phase = "";
+        
+        double T2 = (JD - 2415020.0) / 36525;
+        double L = 270.434164 + 481267.8831*T2;
+        double M = 358.475833 + 35999.0498*T2;
+        double M1 = 296.104608 + 477198.8491*T2;
+        double D = 350.737486 + 445267.1142*T2;
+        double F = 11.250889 + 483202.0251*T2;              
+        
+        RA = 0.0;
+        dec = 0.0;
+        
+        m = new Moon(phase, RA, dec);
+        return m;
     }
 }

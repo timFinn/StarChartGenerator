@@ -51,10 +51,6 @@ public class SkySearch {
         
         celestialObjectType = "Star";
         starArray = new StarParser().CSVToArrayList(celestialObjectType, starArray);
-        
-        //System.out.println(messierArray.toString());
-        //System.out.println(planetArray.toString());
-        //System.out.println(starArray.toString());
     }
     
     public ArrayList getStars()
@@ -75,7 +71,6 @@ public class SkySearch {
     public void calcSpaceTimeWindow()
     {        
         frm.calcMeanSidereal(obs.observedDate);
-        //frm.calcJulianDay();
         frm.calcRelativeJD();        
     }
     
@@ -108,30 +103,24 @@ public class SkySearch {
     
     public void findEarth()
     {
-        earth = (Planet) planetArray.get(2);        
+        earth = (Planet) planetArray.get(2);
     }
     
-    public void calcEarth()
-    {
-        double s = frm.calcSemiAxis(earth.getaScal(), earth.getaProp());
-        double e = frm.calcEccentricity(earth.geteScal(), earth.geteProp());
-        double i = frm.calcPlaneInclination(earth.getiScal(), earth.getiProp());
-        double p = frm.calcPerihelion(earth.getwScal(), earth.getwProp());
-        double l = frm.calcLongAscNode(earth.getoScal(), earth.getoProp());
-        double m = frm.calcMeanLong(earth.getlScal(), earth.getlProp());            
-        earth.setElements(s, e, i, p, l, m);     
+    public void calcMoon()
+    {       
+        Moon m = frm.lunarCalc();
     }
     
     public void generateChart()
     {
         createLists();
         calcSpaceTimeWindow();
-        
         findEarth();
-        //calcEarth();
+        
         calcPlanetaryElements();
         calcPlanets();
-        System.out.println("planetary elements done");
+        
+        calcMoon();
         //drawshit
         /*
             relative lat and long are the origin for calculating the viewport
