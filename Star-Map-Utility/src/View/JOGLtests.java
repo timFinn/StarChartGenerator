@@ -568,6 +568,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         //Constellation group = (Constellation)this.constellation.get(0);
         while(groupIt.hasNext()) {
             Constellation currentConstellation = groupIt.next();
+            boolean nameflag = true;
         //CelestialObject startOfLine = new CelestialObject();
         //startOfLine.dec = 361; //bogus value to start search
         Iterator<CelestialObject> conIt = currentConstellation.constellationMembers.iterator();
@@ -591,7 +592,15 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
                 x1 = this.sphereSize * cos(rd1) * cos(ra1);
                 z1 = this.sphereSize * cos(rd1) * sin(ra1);
                 y1 = this.sphereSize * sin(rd1);
-
+if(nameflag) { //print name of constellation under first star of constellation
+    String name = currentConstellation.constellationName;
+    gl2.glPushMatrix(); //preserve state
+    gl2.glTranslated(x1, y1-20, z1);  //PLACEHOLDER TO SHIFT IT DOWN A LITTLE
+    this.printName(name, 0, drawable);
+    gl2.glPopMatrix();
+    nameflag = false;
+    
+}
                 //finds x,y,z position for end
                 double ra2 = this.convertHoursToRadians(endOfLine.ra);
                 double rd2 = Math.toRadians(endOfLine.dec);
