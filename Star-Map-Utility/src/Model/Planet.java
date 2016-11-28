@@ -47,7 +47,8 @@ public class Planet extends CelestialObject {
         this.wScal = wScal;
         this.wProp = wProp;
         this.oScal = oScal;
-        this.oProp = oProp;       
+        this.oProp = oProp;
+        super.properName=this.planetName;
     }
     
     public void setElements(double s, double e, double i, double p, double l, double m)

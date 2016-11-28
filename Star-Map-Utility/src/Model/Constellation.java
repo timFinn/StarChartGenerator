@@ -11,10 +11,12 @@ import java.util.ArrayList;
  *
  * @author Your Name <timothy>
  */
-public class Constellation extends CelestialObject {
-    ArrayList constellationMembers;
+public class Constellation {
+    public ArrayList<CelestialObject> constellationMembers = new ArrayList<>();
+    public String constellationName;
 
-    public Constellation() {
+    public Constellation(String constellationName) {
+      //  this.constellationMembers = constellationMembers;
+        this.constellationName = constellationName;
     }
-    
 }
