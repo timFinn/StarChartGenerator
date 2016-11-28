@@ -21,6 +21,7 @@ public class SkySearch {
     private final Observer obs;
     private Planet planet;
     private Planet earth;
+    private Moon m;
     
     private ArrayList starArray;
     private ArrayList planetArray;
@@ -113,7 +114,7 @@ public class SkySearch {
     
     public void calcMoon()
     {       
-        Moon m = frm.lunarCalc();
+        this.m = frm.lunarCalc();
     }
     
   public void generateChart()
@@ -129,7 +130,7 @@ public class SkySearch {
         
         calcMoon();
         
-        JOGLtests jt = new JOGLtests( this.starArray,this.messierArray, this.planetArray,  constellations,
+        JOGLtests jt = new JOGLtests( this.starArray,this.messierArray, this.planetArray,  constellations, m,
             this.latitude,  this.longitude);                    
     }
 

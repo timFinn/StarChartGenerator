@@ -9,6 +9,7 @@ import Model.Messier;
 import Model.Planet;
 import Model.Star;
 import Model.Constellation;
+import Model.Moon;
 import com.jogamp.nativewindow.util.Dimension;
 import com.jogamp.nativewindow.util.Rectangle;
 import com.jogamp.newt.Display;
@@ -55,6 +56,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     private ArrayList planetArray;
     private ArrayList messierArray;
     private ArrayList constellation= new ArrayList<>();
+    private Moon moon;
   
     //I may need these to play with glOrtho in reshape call.
     private double xleft, xright;
@@ -71,25 +73,10 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     Star testStar3 = new Star(2,"FINAL",0,-0.785398,3);
    
     //THIS IS THE "eventual" final destination for JOGLtests. Copypaste up here.
-    public JOGLtests(ArrayList stars, ArrayList messiers, ArrayList planets, ArrayList constellation,
+    public JOGLtests(ArrayList stars, ArrayList messiers, ArrayList planets, ArrayList constellation, Moon moon,
             double latitude, double longitude) {
-        /*FIXME THIS IS BOGUS DATA TO MAKE CONSTELLATIONS TEST*/
-        CelestialObject foo1 = new CelestialObject();
-        CelestialObject foo2 = new CelestialObject();
-        
-        CelestialObject foo3 = new CelestialObject();
-        CelestialObject foo4 = new CelestialObject();
-        foo1.dec=0; foo1.ra = 0;
-        foo2.dec=89; foo2.ra = Math.toDegrees(this.convertHoursToRadians(2.52974312));
-        foo3.dec=29.09 ; foo3.ra = Math.toDegrees(this.convertHoursToRadians(0.13976888));
-        foo4.dec=59.1502184; foo4.ra = Math.toDegrees(this.convertHoursToRadians(0.15280269));
-        this.constellation.add(foo1);
-        this.constellation.add(foo2);
-        this.constellation.add(foo3);
-        this.constellation.add(foo4);
-        /*EVERYTHING ABOVE NEEDS TO GO!*/
        this.constellation =constellation;
-        
+        this.moon = moon;
         this.sphereSlice = 8; //initial slice calculation
         this.drawcnst = false; //draw no constellations
         this.drawstr = true; //draw stars
@@ -263,6 +250,9 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         if(this.drawplnt) { //if drawing planets
             this.drawPlanets(drawable);
         }
+        if(this.drawmoon) { //if drawing the moon
+            this.drawMoon(drawable);
+        }
         //this.drawPlanets(drawable);
   /*      for (Planet currentPlanet: planetArray) {
             //stuff goes here
@@ -359,8 +349,10 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
             }
         } else if (e.getKeyCode() == KeyEvent.VK_R) { //rotate
             this.rotate = true;
-        } else if (e.getKeyCode() == KeyEvent.VK_Z) {
-            System.out.println("Put the call to the function to create the jpg here, Evan"); //FIX ME DELETE ME HEY RIGHT HERE, just by pressing z you can test.
+        } else if (e.getKeyCode() == KeyEvent.VK_Z) { //printscreen
+            System.out.println("Put the call to the function to create the jpg here, human"); //FIX ME DELETE ME HEY RIGHT HERE, just by pressing z you can test.
+        } else if (e.getKeyCode() == KeyEvent.VK_N) { //draw moon
+            this.drawmoon = !drawmoon;
         }
         glWindow.display(); //redraw?
     }
@@ -558,7 +550,16 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     }
     private void drawMoon(GLAutoDrawable drawable) {
         GL2 gl2 = drawable.getGL().getGL2();
+        System.out.println("I should be drawing moon now");
         //DRAW MOON HERE
+        gl2.glPushMatrix();
+        double ra = this.moon.getRA();
+        double rd = this.moon.getDec();
+        String name = this.moon.getPhase();
+        gl2.glColor3d(1,1,1);
+        this.drawSphere(ra, rd, 0, drawable);
+        this.printName(name, 0, drawable);
+        gl2.glPopMatrix();
     }
     
     private void drawConstellations(GLAutoDrawable drawable) {
