@@ -31,5 +31,8 @@ public class Star extends CelestialObject {
         this.properName = properName;
         this.rightAscension = rightAscension;
         this.declination = declination;
+        this.magnitude = magnitude;
+        super.ra = rightAscension*360/24;
+        super.dec = declination;
     }
 }
