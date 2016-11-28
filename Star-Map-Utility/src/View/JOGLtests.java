@@ -61,7 +61,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     private double ydown, yup;
     private double znear, zfar;
    
-    private boolean drawcnst, drawstr, drawmss, drawplnt, rotate;
+    private boolean drawcnst, drawstr, drawmss, drawplnt, rotate, drawmoon;
     private int sphereSlice;
     
     /*TEST CODE HERE FIXME DELETEME
@@ -90,12 +90,13 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         /*EVERYTHING ABOVE NEEDS TO GO!*/
        this.constellation =constellation;
         
-        this.sphereSlice = 16; //initial slice calculation
+        this.sphereSlice = 8; //initial slice calculation
         this.drawcnst = false; //draw no constellations
         this.drawstr = true; //draw stars
         this.drawmss = true; //draw messiers
         this.drawplnt = true; //don't have planets to draw yet FIXME
         this.rotate = false; //initialize test var
+        this.drawmoon = false;
         this.lat=latitude;
         this.longitude = longitude;
         //finish ArrayList assignments here
@@ -260,7 +261,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         this.drawMessiers(drawable);
         }
         if(this.drawplnt) { //if drawing planets
-            
+            this.drawPlanets(drawable);
         }
         //this.drawPlanets(drawable);
   /*      for (Planet currentPlanet: planetArray) {
@@ -544,10 +545,10 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         while (planIt.hasNext()) {
             Planet currentPlan = planIt.next();
             gl2.glPushMatrix();
-            double ra = Math.toRadians(currentPlan.ra);
-            double rd = Math.toRadians(currentPlan.dec);
-            String name = currentPlan.properName; //PLACEHOLDER FOR NAMES FOR MESSY OBJECTS
-            gl2.glColor3d(0,1,1);
+            double ra = currentPlan.getRightAsc();
+            double rd = currentPlan.getDeclination();
+            String name = currentPlan.getPlanetName(); //PLACEHOLDER FOR NAMES FOR MESSY OBJECTS
+            gl2.glColor3d(1,1,1);
             this.drawSphere(ra, rd, PLACEHOLDER, drawable);
             this.printName(name, PLACEHOLDER, drawable);
             gl2.glPopMatrix();
