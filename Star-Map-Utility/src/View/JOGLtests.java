@@ -9,6 +9,7 @@ import Model.Messier;
 import Model.Planet;
 import Model.Star;
 import Model.Constellation;
+import Model.Moon;
 import com.jogamp.nativewindow.util.Dimension;
 import com.jogamp.nativewindow.util.Rectangle;
 import com.jogamp.newt.Display;
@@ -55,6 +56,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     private ArrayList planetArray;
     private ArrayList messierArray;
     private ArrayList constellation= new ArrayList<>();
+    private Moon moon;
   
     //I may need these to play with glOrtho in reshape call.
     private double xleft, xright;
@@ -71,10 +73,10 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     Star testStar3 = new Star(2,"FINAL",0,-0.785398,3);
    
     //THIS IS THE "eventual" final destination for JOGLtests. Copypaste up here.
-    public JOGLtests(ArrayList stars, ArrayList messiers, ArrayList planets, ArrayList constellation,
+    public JOGLtests(ArrayList stars, ArrayList messiers, ArrayList planets, ArrayList constellation, Moon moon
             double latitude, double longitude) {
         /*FIXME THIS IS BOGUS DATA TO MAKE CONSTELLATIONS TEST*/
-        CelestialObject foo1 = new CelestialObject();
+        /*CelestialObject foo1 = new CelestialObject();
         CelestialObject foo2 = new CelestialObject();
         
         CelestialObject foo3 = new CelestialObject();
@@ -88,6 +90,7 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
         this.constellation.add(foo3);
         this.constellation.add(foo4);
         /*EVERYTHING ABOVE NEEDS TO GO!*/
+    this.moon = moon;
        this.constellation =constellation;
         
         this.sphereSlice = 16; //initial slice calculation
@@ -555,7 +558,16 @@ public class JOGLtests implements GLEventListener, KeyListener, MouseListener {
     }
     private void drawMoon(GLAutoDrawable drawable) {
         GL2 gl2 = drawable.getGL().getGL2();
+        int PLACEHOLDER = 20;
         //DRAW MOON HERE
+        double ra = Math.toRadians(this.moon.ra);
+        double rd = Math.toRadians(this.moon.dec);
+        String name = this.moon.properName;
+        gl2.glPushMatrix();
+        gl2.glColor3d(0,1,1);
+        this.drawSphere(ra,rd,PLACEHOLDER,drawable);
+        this.printName(name, PLACEHOLDER*2, drawable);
+        gl2.glPopMatrix();
     }
     
     private void drawConstellations(GLAutoDrawable drawable) {
