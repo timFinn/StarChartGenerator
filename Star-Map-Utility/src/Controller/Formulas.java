@@ -374,8 +374,27 @@ public class Formulas {
         
         // Math.ceil(k) to find next new moon
         // Math.floor(k) to find previous new moon
-        // .25 .5 .75 increments to find quarter full phases
-        phase = "";
+        // .25 .5 .75 increments to get quarter and full phases
+        if((Math.ceil(k) - k >= 0.0 && Math.ceil(k) - k < 0.15) || (k - Math.floor(k) >= 0.0 && k - Math.floor(k) < 0.15))
+        {
+            phase = "new";
+        }
+        else if((Math.ceil(k) - k >= 0.15 && Math.ceil(k) - k < 0.35) || (k - Math.floor(k) >= 0.15 && k - Math.floor(k) < 0.35))
+        {
+            phase = "wax";
+        }
+        else if((Math.ceil(k) - k >= 0.60 && Math.ceil(k) - k < 1.0) || (k - Math.floor(k) >= 0.60 && k - Math.floor(k) < 1.0))        
+        {
+            phase = "wane";
+        }
+        else if((Math.ceil(k) - k >= 0.35 && Math.ceil(k) - k < 0.60) || (k - Math.floor(k) >= 0.35 && k - Math.floor(k) < 0.60))
+        {
+            phase = "full";
+        }
+        else
+        {
+            phase = "full";
+        }        
         
         double T2 = (JD - 2415020.0) / 36525;
         double L = 270.434164 + 481267.8831*T2;
@@ -384,10 +403,15 @@ public class Formulas {
         double D = 350.737486 + 445267.1142*T2;
         double F = 11.250889 + 483202.0251*T2;              
         
-        RA = 0.0;
-        dec = 0.0;
+        double e = 1 - 0.002495 * T - 0.00000752 * Math.pow(T, 2);
+        //All calls to Math.sin need to be made with RADS()
+        double geoLong = L + (6.288750 * Math.sin(M1)*RADS()) + (1.274018 * Math.sin(2*D - M1)*RADS()) + (0.658309 * Math.sin(2*D)*RADS()) + (0.213616 * Math.sin(2*M1)*RADS()) - (0.185596 * Math.sin(M)*RADS() * e) - (0.114336 * Math.sin(2*F)*RADS()) + (0.058793 * Math.sin(2*D - 2*M1)*RADS()) +(0.057212 * Math.sin(2*D - M - M1)*RADS() * e) + (0.053320 * Math.sin(2*D + M1)*RADS()) + (0.045874 * Math.sin(2*D - M)*RADS() * e);
+        double geoLat = (5.128189 * Math.sin(F)*RADS()) + 0.280606 * (Math.sin(M1 + F)*RADS()) + (0.277693 * Math.sin(M1 - F)*RADS()) + (0.173238 * Math.sin(2*D - F)*RADS()) + (0.055413 * Math.sin(2*D + F - M1)*RADS()) + (0.046272 * Math.sin(2*D - F - M1)*RADS()) + (0.032573 * Math.sin(2*D + F)*RADS()) + (0.017198 * Math.sin(2*M1 + F)*RADS()) + (0.009267 * Math.sin(2*D + M1 - F)*RADS()) + (0.008823 * Math.sin(2*M1 - F)*RADS());
         
-        m = new Moon(phase, RA, dec);
+        RA = 0.0;   //no clue
+        dec = 0.0;  //no clue
+        
+        m = new Moon(phase, geoLong, geoLat);
         return m;
     }
 }
