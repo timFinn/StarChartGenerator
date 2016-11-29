@@ -155,11 +155,14 @@ public class DrawVerse implements GLEventListener, KeyListener, MouseListener {
         gl2.glOrtho(xleft, xright, ydown, yup, znear, zfar); //define view of stars
         gl2.glMatrixMode(GL2.GL_MODELVIEW);
         
-     //TEST CODE TO SEE UNIVERSE
-      // gl2.glTranslated(0,0,-this.sphereSize);
-      gl2.glRotated(90-63,1,0,0);
+        //TEST CODE TO SEE UNIVERSE
+        gl2.glTranslated(0,0,-this.sphereSize);
+        //gl2.glRotated(90-63,1,0,0);
         //FIXME this is where rotations will go to define viewerspace
-       
+        //THESE DO NOT WORK CORRECT CURRENTLY
+        gl2.glRotated(Math.toDegrees(this.lat),0,1,0);
+        gl2.glRotated(Math.toDegrees(this.longitude),1,0,0);       
+        
     }
     @Override
     public void dispose(GLAutoDrawable drawable) {
@@ -187,7 +190,10 @@ public class DrawVerse implements GLEventListener, KeyListener, MouseListener {
         //rotation here?
       //  gl2.glTranslated(0, 0, 300);
         if(this.drawstr) { //if drawing stars
+            gl2.glPushMatrix();
+            //ROTATE TO SIDEREAL TIME
         this.drawStars(drawable);
+        gl2.glPopMatrix();
         }
         if(this.drawcnst) { //if drawing constellations
             this.drawConstellations(drawable);
