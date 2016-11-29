@@ -7,6 +7,7 @@ package Controller;
 
 import Model.*;
 import View.DrawVerse;
+import View.JPEG;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;

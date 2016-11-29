@@ -10,5 +10,8 @@ package View;
  * @author Your Name <timothy>
  */
 public class JPEG {
-    
+    public JPEG()
+    {
+        
+    }
 }

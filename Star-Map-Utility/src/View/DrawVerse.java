@@ -31,6 +31,10 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.gl2.GLUT;
+import com.jogamp.opengl.util.GLReadBufferUtil;
+import com.jogamp.opengl.util.awt.AWTGLReadBufferUtil;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -45,7 +49,7 @@ public class DrawVerse implements GLEventListener, KeyListener, MouseListener {
    
     //need these to start openGL
     public static GLWindow glWindow;
-    public static Animator animator;
+    //public static Animator animator;
     private GLUT glut = new GLUT(); //to use glut commands
     private double sphereSize; // this defines the size of our sphere  
     private double modifier = 1; //modifier to scale graphics correctly
@@ -155,14 +159,12 @@ public class DrawVerse implements GLEventListener, KeyListener, MouseListener {
         gl2.glOrtho(xleft, xright, ydown, yup, znear, zfar); //define view of stars
         gl2.glMatrixMode(GL2.GL_MODELVIEW);
         
-        //TEST CODE TO SEE UNIVERSE
-        gl2.glTranslated(0,0,-this.sphereSize);
-        //gl2.glRotated(90-63,1,0,0);
         //FIXME this is where rotations will go to define viewerspace
         //THESE DO NOT WORK CORRECT CURRENTLY
-        gl2.glRotated(Math.toDegrees(this.lat),0,1,0);
-        gl2.glRotated(Math.toDegrees(this.longitude),1,0,0);       
-        
+        gl2.glRotated(this.lat,1,0,0);
+        gl2.glRotated(this.longitude,0,1,0);       
+        //gl2.glTranslated(0,0,-this.sphereSize);
+        gl2.glRotated(90-63,1,0,0);        
     }
     @Override
     public void dispose(GLAutoDrawable drawable) {
@@ -285,6 +287,12 @@ public class DrawVerse implements GLEventListener, KeyListener, MouseListener {
             this.rotate = true;
         } else if (e.getKeyCode() == KeyEvent.VK_Z) { //printscreen
             System.out.println("Put the call to the function to create the jpg here, human"); //FIX ME DELETE ME HEY RIGHT HERE, just by pressing z you can test.
+            
+            AWTGLReadBufferUtil buff = new AWTGLReadBufferUtil(glWindow.getGLProfile(), true);
+            //BufferedImage image = buff.readPixelsToBufferedImage(glWindow.getGL().getGL()., true);
+            //buff.readPixels(, false);
+            File dest = new File("chart.jpg");
+            //buff.write(dest);
         } else if (e.getKeyCode() == KeyEvent.VK_N) { //draw moon
             this.drawmoon = !drawmoon;
         }

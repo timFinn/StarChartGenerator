@@ -79,10 +79,10 @@ public class GUI extends javax.swing.JFrame {
         timeLabel.setText("Time");
 
         dateEntered.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        dateEntered.setText("2010-05-18");
+        dateEntered.setText("2000-01-01");
 
         timeEntered.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        timeEntered.setText("23:59:59");
+        timeEntered.setText("12:00:00");
         timeEntered.setToolTipText("HH:mm:ss");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -145,7 +145,6 @@ public class GUI extends javax.swing.JFrame {
         latConverted = Double.parseDouble(latEntered.getText());
         longConverted = Double.parseDouble(longEntered.getText());        
         dateConverted = LocalDate.parse(dateEntered.getText());                        
-        //dateConverted = LocalDate.parse("1983-02-22");
         timeConverted = LocalTime.parse(timeEntered.getText());
         
         Controller.SkySearch ss = new SkySearch(latConverted, longConverted, dateConverted, timeConverted);
