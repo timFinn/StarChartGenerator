@@ -6,7 +6,7 @@
 package Controller;
 
 import Model.*;
-import View.JOGLtests;
+import View.DrawVerse;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -130,7 +130,7 @@ public class SkySearch {
         
         calcMoon();
         
-        JOGLtests jt = new JOGLtests( this.starArray,this.messierArray, this.planetArray,  constellations, m,
+        DrawVerse jt = new DrawVerse( this.starArray,this.messierArray, this.planetArray,  constellations, m,
             this.latitude,  this.longitude);                    
     }
 

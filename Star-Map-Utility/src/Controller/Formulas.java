@@ -406,10 +406,7 @@ public class Formulas {
         double e = 1 - 0.002495 * T - 0.00000752 * Math.pow(T, 2);
         //All calls to Math.sin need to be made with RADS()
         double geoLong = L + (6.288750 * Math.sin(M1)*RADS()) + (1.274018 * Math.sin(2*D - M1)*RADS()) + (0.658309 * Math.sin(2*D)*RADS()) + (0.213616 * Math.sin(2*M1)*RADS()) - (0.185596 * Math.sin(M)*RADS() * e) - (0.114336 * Math.sin(2*F)*RADS()) + (0.058793 * Math.sin(2*D - 2*M1)*RADS()) +(0.057212 * Math.sin(2*D - M - M1)*RADS() * e) + (0.053320 * Math.sin(2*D + M1)*RADS()) + (0.045874 * Math.sin(2*D - M)*RADS() * e);
-        double geoLat = (5.128189 * Math.sin(F)*RADS()) + 0.280606 * (Math.sin(M1 + F)*RADS()) + (0.277693 * Math.sin(M1 - F)*RADS()) + (0.173238 * Math.sin(2*D - F)*RADS()) + (0.055413 * Math.sin(2*D + F - M1)*RADS()) + (0.046272 * Math.sin(2*D - F - M1)*RADS()) + (0.032573 * Math.sin(2*D + F)*RADS()) + (0.017198 * Math.sin(2*M1 + F)*RADS()) + (0.009267 * Math.sin(2*D + M1 - F)*RADS()) + (0.008823 * Math.sin(2*M1 - F)*RADS());
-        
-        RA = 0.0;   //no clue
-        dec = 0.0;  //no clue
+        double geoLat = (5.128189 * Math.sin(F)*RADS()) + 0.280606 * (Math.sin(M1 + F)*RADS()) + (0.277693 * Math.sin(M1 - F)*RADS()) + (0.173238 * Math.sin(2*D - F)*RADS()) + (0.055413 * Math.sin(2*D + F - M1)*RADS()) + (0.046272 * Math.sin(2*D - F - M1)*RADS()) + (0.032573 * Math.sin(2*D + F)*RADS()) + (0.017198 * Math.sin(2*M1 + F)*RADS()) + (0.009267 * Math.sin(2*D + M1 - F)*RADS()) + (0.008823 * Math.sin(2*M1 - F)*RADS());        
         
         m = new Moon(phase, geoLong, geoLat);
         return m;
