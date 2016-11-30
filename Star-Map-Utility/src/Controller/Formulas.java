@@ -123,7 +123,7 @@ public class Formulas {
 
     public int cy()
     {
-        int cy = (int) (julianDate/365.25);
+        int cy = (int) (julianDate/36525);
         return cy;
     }
 

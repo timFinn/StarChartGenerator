@@ -76,19 +76,24 @@ public class SkySearch {
     }
     
     public void calcSpaceTimeWindow()
-    {        
-        frm.calcMeanSidereal(obs.observedDate);
+    {   
+        System.out.println("Calculating GMST");
+        frm.calcMeanSidereal(obs.observedDate);        
         frm.calcRelativeJD();        
+        System.out.println("Calculating JD relative to J2000 epoch");
     }
     
     public void calcPlanets()
     {
         Iterator<Planet> planetIt = planetArray.iterator();        
         while(planetIt.hasNext())
-        {
+        {            
             planet = planetIt.next();                       
+            System.out.println(planet.getPlanetName());
             frm.calcRAdec(planet, earth);
+            System.out.println("RA and dec computed");
             planet.setRAdec(frm.getRA(), frm.getDec());
+            System.out.println("RA and dec set");
         }
     }
     
@@ -121,15 +126,22 @@ public class SkySearch {
   public void generateChart()
     {
         createLists();
+        System.out.println("Lists created");
         calcSpaceTimeWindow();
+        System.out.println("Space/Time window calculated");
         findEarth();
+        System.out.println("Earth found");
         
         calcPlanetaryElements();
+        System.out.println("Planetary elements calculated");
         calcPlanets();
+        System.out.println("Planetary positions calculated");
         
         ArrayList constellations = this.generateConstellations();
+        System.out.println("Constellations drawn");
         
         calcMoon();
+        System.out.println("Moon position and phase calculated");
         
         DrawVerse jt = new DrawVerse( this.starArray,this.messierArray, this.planetArray,  constellations, m,
             this.latitude,  this.longitude);                    
